@@ -6,7 +6,7 @@ import {
   DefaultTheme,
 } from "styled-components";
 import { lightTheme, darkTheme } from "@/src/styles/theme";
-import GlobalStyle from "@/src/styles/GlobalStyle";
+import GlobalStyle from "@/src/styles/globalStyle";
 
 interface ThemeContextType {
   theme: DefaultTheme;
