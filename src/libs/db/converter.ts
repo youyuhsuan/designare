@@ -11,11 +11,11 @@ import {
   QueryDocumentSnapshot as AdminQueryDocumentSnapshot,
 } from "firebase-admin/firestore";
 
-// import type {
-//   ProjectInfo,
-//   ProjectMetadata,
-//   SerializedTimestamp,
-// } from "@/src/types/project";
+import type {
+  ProjectInfo,
+  ProjectMetadata,
+  SerializedTimestamp,
+} from "@/src/types/projectTypes";
 import type { StoredToken } from "@/src/types/tokenTypes";
 
 const toSnakeCase = (str: string) =>
@@ -37,42 +37,42 @@ const convertKeys = (obj: any, converter: (key: string) => string): any => {
 };
 
 // Project converter
-// const projectInfoConverter: FirestoreDataConverter<ProjectInfo> = {
-//   toFirestore(projectInfo: ProjectInfo): DocumentData {
-//     const converted = convertKeys(projectInfo, toSnakeCase);
-//     Object.keys(converted).forEach(
-//       (key) => converted[key] === undefined && delete converted[key]
-//     );
-//     return converted;
-//   },
-//   fromFirestore(
-//     snapshot: QueryDocumentSnapshot,
-//     options: SnapshotOptions
-//   ): ProjectInfo {
-//     const data = snapshot.data(options);
-//     const converted = convertKeys(data, toCamelCase);
-//     return converted as ProjectInfo;
-//   },
-// };
+const projectInfoConverter: FirestoreDataConverter<ProjectInfo> = {
+  toFirestore(projectInfo: ProjectInfo): DocumentData {
+    const converted = convertKeys(projectInfo, toSnakeCase);
+    Object.keys(converted).forEach(
+      (key) => converted[key] === undefined && delete converted[key]
+    );
+    return converted;
+  },
+  fromFirestore(
+    snapshot: QueryDocumentSnapshot,
+    options: SnapshotOptions
+  ): ProjectInfo {
+    const data = snapshot.data(options);
+    const converted = convertKeys(data, toCamelCase);
+    return converted as ProjectInfo;
+  },
+};
 
-// const projectMetadataConverter: FirestoreDataConverter<ProjectMetadata> = {
-//   toFirestore(projectMetadata: ProjectMetadata): DocumentData {
-//     return projectMetadata;
-//   },
-//   fromFirestore(
-//     snapshot: QueryDocumentSnapshot,
-//     options: SnapshotOptions
-//   ): ProjectMetadata {
-//     const data = snapshot.data(options);
-//     return {
-//       projectId: snapshot.id,
-//       name: data.name,
-//       screenshotUrl: data.screenshot_url,
-//       lastModified: data.last_modified as SerializedTimestamp,
-//       createdAt: data.created_at as SerializedTimestamp,
-//     };
-//   },
-// };
+const projectMetadataConverter: FirestoreDataConverter<ProjectMetadata> = {
+  toFirestore(projectMetadata: ProjectMetadata): DocumentData {
+    return projectMetadata;
+  },
+  fromFirestore(
+    snapshot: QueryDocumentSnapshot,
+    options: SnapshotOptions
+  ): ProjectMetadata {
+    const data = snapshot.data(options);
+    return {
+      projectId: snapshot.id,
+      name: data.name,
+      screenshotUrl: data.screenshot_url,
+      lastModified: data.last_modified as SerializedTimestamp,
+      createdAt: data.created_at as SerializedTimestamp,
+    };
+  },
+};
 
 // Stored token converter
 const storedTokenConverter: AdminFirestoreDataConverter<StoredToken> = {
@@ -95,5 +95,4 @@ const storedTokenConverter: AdminFirestoreDataConverter<StoredToken> = {
   },
 };
 
-// export { projectInfoConverter, projectMetadataConverter, storedTokenConverter };
-export { storedTokenConverter };
+export { projectInfoConverter, projectMetadataConverter, storedTokenConverter };

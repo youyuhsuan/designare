@@ -10,7 +10,6 @@ import useToken from "@/src/hooks/useToken";
 import useAuth from "@/src/hooks/useAuth";
 
 const NavbarWrapper = styled.nav`
-  background-color: ${(props) => props.theme.colors.background};
   width: 100%;
   padding: 1rem 0;
 `;

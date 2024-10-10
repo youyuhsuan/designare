@@ -1,4 +1,4 @@
-import Navbar from "@/src/components/home/Navbar";
+import Navbar from "@/src/components/Navbar";
 import Footer from "@/src/components/Footer";
 import React from "react";
 
