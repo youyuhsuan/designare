@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/router";
 import Button from "@/src/ui/Button";
 import {
   CreateProjectButtonProps,
   CreateProjectInfoProps,
   ProjectType,
 } from "@/src/types/projectTypes";
+import useDashboardContext from "@/src/hooks/useDashboardContext";
 
 const getDefaultScreenshotUrl = (type: ProjectType) => {
   switch (type) {
@@ -25,8 +25,9 @@ const CreateProjectButton: React.FC<CreateProjectButtonProps> = ({
   buttonText = "建立新網站",
   screenshotUrl,
 }) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const { navigateToProject } = useDashboardContext();
 
+  const [isLoading, setIsLoading] = useState(false);
   const handleClick = async () => {
     setIsLoading(true);
     try {
@@ -49,9 +50,8 @@ const CreateProjectButton: React.FC<CreateProjectButtonProps> = ({
           `Create project failed with status: ${response.status}`
         );
       }
-      const date = await response.json();
-      const router = useRouter();
-      router.push(`/website/${date.projectId}`);
+      const data = await response.json();
+      navigateToProject(data.projectId);
     } catch (error) {
       console.error(
         "Unknown error occurred while creating project",

@@ -7,7 +7,7 @@ import {
 
 const useProjectManagement = () => {
   const [projects, setProjects] = useState<ProjectMetadata[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   const fetchAllProjects = useCallback(async () => {

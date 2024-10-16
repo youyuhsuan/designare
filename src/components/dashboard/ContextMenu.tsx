@@ -19,7 +19,7 @@ const MenuWrapper = styled.div<{ $top: number; $left: number }>`
   position: fixed;
   top: ${(props) => props.$top}px;
   left: ${(props) => props.$left}px;
-  background-color: white;
+  background-color: ${(props) => props.theme.colors.background};
   border: 1px solid #eaeaea;
   border-radius: 4px;
   box-shadow: 0 2px 10px ${(props) => props.theme.colors.shadow};

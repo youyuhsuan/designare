@@ -54,9 +54,15 @@ interface CreateProjectButtonProps {
   screenshotUrl?: string;
 }
 
-// projectInfoConverter
+// ProjectInfoConverter
 interface ProjectInfoConverter
   extends Omit<ProjectMetadata, "lastModified" | "createdAt"> {}
+
+// Promise.all
+interface ProjectDetails {
+  info: ProjectInfo;
+  page?: any | null;
+}
 
 export type {
   SerializedTimestamp,
@@ -69,4 +75,5 @@ export type {
   CreateProjectInfoProps,
   CreateProjectButtonProps,
   ProjectInfoConverter,
+  ProjectDetails,
 };

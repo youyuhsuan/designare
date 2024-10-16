@@ -13,7 +13,6 @@ const IconButton = styled.button<{ $isActive: boolean }>`
   padding: 1rem;
   color: ${(props) =>
     props.$isActive ? props.theme.colors.primary : props.theme.colors.primary};
-
   &:hover {
     color: ${(props) => props.theme.colors.accent};
   }

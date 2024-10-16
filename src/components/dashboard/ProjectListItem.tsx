@@ -95,7 +95,7 @@ const ProjectListItem: React.FC<ProjectListItemProps> = ({
     <ProjectItem $viewMode={viewMode}>
       <ProjectThumbnail $viewMode={viewMode} />
       <ProjectInfo>
-        <ProjectName href={`/project/${project.projectId}`}>
+        <ProjectName href={`/project/editor/${project.projectId}`}>
           {project.name}
         </ProjectName>
         <LastEdited>

@@ -12,7 +12,6 @@ const Header = styled.header`
 const SearchBar = styled.div`
   display: flex;
   align-items: center;
-  background-color: ${(props) => props.theme.colors.background};
   border-radius: 20px;
   padding: 5px 15px;
   width: 300px;

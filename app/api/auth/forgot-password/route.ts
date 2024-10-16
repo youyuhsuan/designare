@@ -34,9 +34,9 @@ import { sendPasswordResetEmail } from "firebase/auth";
 import { firebaseAuth } from "@/src/configs/firebaseClient";
 import { forgotPasswordSchema } from "@/src/libs/schemas/authSchema";
 
-export async function POST(request: NextRequest) {
+export async function POST(req: NextRequest) {
   try {
-    const body = await request.json();
+    const body = await req.json();
     const { email } = forgotPasswordSchema.parse(body);
     try {
       await sendPasswordResetEmail(firebaseAuth, email);

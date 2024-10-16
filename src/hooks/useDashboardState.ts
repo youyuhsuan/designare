@@ -1,7 +1,8 @@
 import React from "react";
 import useProjectManagement from "@/src/hooks/useProjectManagement";
+import DashboardContext from "@/src/store/context/DashboardContext";
 
-const useDashboard = () => {
+const useDashboardState = () => {
   const [searchTerm, setSearchTerm] = React.useState("");
   const [viewMode, setViewMode] = React.useState<"grid" | "list">("grid");
   const {
@@ -58,6 +59,13 @@ const useDashboard = () => {
     setViewMode(view);
   }, []);
 
+  const Dashboardcontext = React.useContext(DashboardContext);
+  if (Dashboardcontext === undefined) {
+    throw new Error(
+      "useDashboardState must be used within a DashboardProvider"
+    );
+  }
+
   return {
     searchTerm,
     viewMode,
@@ -68,7 +76,8 @@ const useDashboard = () => {
     handleDelete,
     handleRename,
     handleViewToggle,
+    Dashboardcontext,
   };
 };
 
-export default useDashboard;
+export default useDashboardState;

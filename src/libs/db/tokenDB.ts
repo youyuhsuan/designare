@@ -1,7 +1,7 @@
 import { adminFirebaseDB } from "@/src/configs/firebaseAdmin";
 import { Timestamp } from "firebase-admin/firestore";
 import type { StoredToken } from "@/src/types/tokenTypes";
-import { storedTokenConverter } from "@/src/libs/db/converter";
+import { storedTokenConverter } from "@/src/libs/db/converterAdmin";
 
 // Collection Setting
 const TOKENS_COLLECTION = "tokens";

@@ -39,6 +39,11 @@ const ErrorMessage = styled.span`
   color: ${(props) => props.theme.colors.danger};
 `;
 
+const Wrapper = styled.div`
+  max-width: 87.5rem; // 1400px
+  width: 100%;
+`;
+
 const GridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -148,16 +153,18 @@ const ProjectsView: React.FC<ProjectsViewProps> = React.memo(
 
     return (
       <>
-        <Container>
-          {projects.map((project) => (
-            <ProjectListItem
-              key={project.projectId}
-              project={project}
-              onMenuOpen={handleContextMenuOpen}
-              viewMode={viewMode}
-            />
-          ))}
-        </Container>
+        <Wrapper>
+          <Container>
+            {projects.map((project) => (
+              <ProjectListItem
+                key={project.projectId}
+                project={project}
+                onMenuOpen={handleContextMenuOpen}
+                viewMode={viewMode}
+              />
+            ))}
+          </Container>
+        </Wrapper>
         <ContextMenu
           isOpen={isContextMenuOpen}
           position={contextMenuPosition}

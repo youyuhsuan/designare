@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import useDashboard from "@/src/hooks/useDashboard";
+import useDashboardState from "@/src/hooks/useDashboardState";
 import SearchComponent from "@/src/components/dashboard/SearchComponent";
 import ProjectsView from "@/src/components/dashboard/ProjectsView";
 import ViewModeToggle from "@/src/components/dashboard/ViewModeToggle";
@@ -17,7 +17,7 @@ const Dashboard: React.FC = () => {
     handleDelete,
     handleViewToggle,
     handleRename,
-  } = useDashboard();
+  } = useDashboardState();
 
   return (
     <>

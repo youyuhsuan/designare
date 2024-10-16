@@ -1,0 +1,131 @@
+{
+  "assetTypes": [
+    {
+      "name": "Button",
+      "type": "component",
+      "icon": "button-icon",
+      "description": "A clickable button element with multiple variants",
+      "properties": [
+        {
+          "name": "text",
+          "type": "string",
+          "required": true,
+          "default_value": "Click me",
+          "options": []
+        },
+        {
+          "name": "onClick",
+          "type": "string",
+          "required": false,
+          "default_value": "",
+          "options": []
+        },
+        {
+          "name": "variant",
+          "type": "string",
+          "required": false,
+          "default_value": "filled",
+          "options": ["filled", "outlined", "text"]
+        }
+      ],
+      "styles": [
+        {
+          "style_key": "backgroundColor",
+          "default_value": "#007bff"
+        },
+        {
+          "style_key": "color",
+          "default_value": "#ffffff"
+        },
+        {
+          "style_key": "padding",
+          "default_value": "10px 20px"
+        },
+        {
+          "style_key": "borderColor",
+          "default_value": "#007bff"
+        },
+        {
+          "style_key": "borderWidth",
+          "default_value": "1px"
+        },
+        {
+          "style_key": "borderStyle",
+          "default_value": "solid"
+        }
+      ]
+    },
+    {
+      "name": "Input",
+      "type": "component",
+      "icon": "input-icon",
+      "description": "An input field for user data entry",
+      "properties": [
+        {
+          "name": "placeholder",
+          "type": "string",
+          "required": false,
+          "default_value": "Enter text...",
+          "options": []
+        },
+        {
+          "name": "type",
+          "type": "string",
+          "required": true,
+          "default_value": "text",
+          "options": ["text", "number", "email", "password"]
+        }
+      ],
+      "styles": [
+        {
+          "style_key": "width",
+          "default_value": "100%"
+        },
+        {
+          "style_key": "padding",
+          "default_value": "8px 12px"
+        },
+        {
+          "style_key": "borderRadius",
+          "default_value": "4px"
+        }
+      ]
+    },
+    {
+      "name": "Container",
+      "type": "layout",
+      "icon": "container-icon",
+      "description": "A container for grouping other elements",
+      "properties": [
+        {
+          "name": "width",
+          "type": "string",
+          "required": false,
+          "default_value": "100%",
+          "options": []
+        },
+        {
+          "name": "height",
+          "type": "string",
+          "required": false,
+          "default_value": "auto",
+          "options": []
+        }
+      ],
+      "styles": [
+        {
+          "style_key": "display",
+          "default_value": "flex"
+        },
+        {
+          "style_key": "flexDirection",
+          "default_value": "column"
+        },
+        {
+          "style_key": "padding",
+          "default_value": "15px"
+        }
+      ]
+    }
+  ]
+}

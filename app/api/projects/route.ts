@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
   }
   try {
     const decryptedToken = JSON.parse(encryptedToken as string);
-    const payload = await verifyToken(decryptedToken.token.access_token);
+    const payload = await verifyToken(decryptedToken.token.accessToken);
     if (!payload) {
       return NextResponse.json(
         { error: "Token is not valid" },
@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
       body.screenshotUrl || "",
       urlOptions
     );
-    const newProjectId = await projectDB.insertProject(projectInfo);
+    const newProjectId = await projectDB.insertProjectInfo(projectInfo);
     return NextResponse.json(
       { ...projectInfo, projectId: newProjectId },
       { status: 201 }
@@ -83,7 +83,9 @@ export async function GET(request: NextRequest) {
         { status: 401 }
       );
     }
-    const projects = await projectDB.selectAllProjects(payload?.sub as string);
+    const projects = await projectDB.selectAllProjectsMetadata(
+      payload?.sub as string
+    );
     return NextResponse.json(
       { success: true, projects: projects },
       { status: 200 }

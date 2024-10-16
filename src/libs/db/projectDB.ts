@@ -1,38 +1,30 @@
-import { firebaseDB } from "@/src/configs/firebaseClient";
-import {
-  doc,
-  collection,
-  addDoc,
-  getDocs,
-  deleteDoc,
-  updateDoc,
-  getDoc,
-  QueryDocumentSnapshot,
-} from "firebase/firestore";
+import { adminFirebaseDB } from "@/src/configs/firebaseAdmin";
 import type { ProjectMetadata, ProjectInfo } from "@/src/types/projectTypes";
 import {
   projectInfoConverter,
   projectMetadataConverter,
-} from "@/src/libs/db/converter";
+} from "@/src/libs/db/converterAdmin";
 import { FirebaseError } from "firebase/app";
 
 // Collection Setting
 const PROJECTS_COLLECTION = "projects";
-const WEBSITE_PROJECT_COLLECTION = "website_project";
+const INFO_COLLECTION = "info";
+const PAGE_COLLECTION = "page";
 
 const projectDB = {
-  async insertProject(projectInfo: ProjectInfo): Promise<string> {
-    const projectsRef = collection(
-      firebaseDB,
-      PROJECTS_COLLECTION,
-      projectInfo.userId,
-      WEBSITE_PROJECT_COLLECTION
-    ).withConverter(projectInfoConverter);
+  // Info collection
+  async insertProjectInfo(projectInfo: ProjectInfo): Promise<string> {
     try {
       if (!projectInfo.projectId || !projectInfo.name || !projectInfo.userId) {
         throw new Error("Missing required fields in projectInfo");
       }
-      const docRef = await addDoc(projectsRef, projectInfo);
+      const projectsRef = adminFirebaseDB
+        .collection(PROJECTS_COLLECTION)
+        .doc(projectInfo.userId)
+        .collection(INFO_COLLECTION);
+      const docRef = await projectsRef.add(
+        projectInfoConverter.toFirestore(projectInfo)
+      );
       return docRef.id;
     } catch (error) {
       if (error instanceof FirebaseError) {
@@ -48,54 +40,67 @@ const projectDB = {
         throw new Error(`Error while inserting project: ${error.message}`);
       } else {
         console.error("Unknown error:", error as Error);
-        throw new Error("Unknown error occurred while inserting project");
+        throw new Error("Unknown error occurred while inserting project info");
       }
     }
   },
-  async selectProject(
+  async selectProjectInfo(
     userId: string,
     projectId: string
   ): Promise<ProjectInfo | null> {
-    const projectRef = doc(
-      firebaseDB,
-      PROJECTS_COLLECTION,
-      userId,
-      WEBSITE_PROJECT_COLLECTION,
-      projectId
-    ).withConverter(projectInfoConverter);
     try {
-      const docSnap = await getDoc(projectRef);
-      return docSnap.exists() ? docSnap.data() : null;
+      const projectRef = adminFirebaseDB
+        .collection(PROJECTS_COLLECTION)
+        .doc(userId)
+        .collection(INFO_COLLECTION)
+        .doc(projectId)
+        .withConverter(projectInfoConverter);
+      const docSnap = await projectRef.get();
+      if (!docSnap.exists) {
+        throw new Error(
+          `Project not found for userId: ${userId} and projectId: ${projectId}`
+        );
+      }
+      const projectData = docSnap.data();
+      if (!projectData) {
+        throw new Error(
+          `Project data is null or undefined for userId: ${userId} and projectId: ${projectId}`
+        );
+      }
+      return projectData;
     } catch (error) {
-      console.error("Unknown error:", error as Error);
-      throw new Error(
-        "Unknown error occured while selecting project",
-        error as Error
-      );
+      if (error instanceof FirebaseError) {
+        console.error("Firebase error:", error.code, error.message);
+        throw new Error(
+          `Firebase error while selecting project: ${error.message}`
+        );
+      } else {
+        console.error("Unknown error:", error as Error);
+        throw new Error(
+          "Unknown error occured while selecting project info",
+          error as Error
+        );
+      }
     }
   },
-  async selectAllProjects(userId: string): Promise<ProjectMetadata[] | null> {
-    const projectsRef = collection(
-      firebaseDB,
-      PROJECTS_COLLECTION,
-      userId,
-      WEBSITE_PROJECT_COLLECTION
-    ).withConverter(projectMetadataConverter);
+  async selectAllProjectsMetadata(
+    userId: string
+  ): Promise<ProjectMetadata[] | null> {
     try {
-      const querySnapshot = await getDocs(projectsRef);
+      const projectsRef = adminFirebaseDB
+        .collection(PROJECTS_COLLECTION)
+        .doc(userId)
+        .collection(INFO_COLLECTION);
+      const querySnapshot = await projectsRef.get();
       if (querySnapshot.empty) {
         return [];
       }
-      const projects = querySnapshot.docs.map((doc) => {
-        const data = doc.data();
-        return {
-          ...data,
-          projectId: doc.id,
-        };
-      });
-      return projects;
+      return querySnapshot.docs.map((doc) => ({
+        ...projectMetadataConverter.fromFirestore(doc),
+        projectId: doc.id,
+      }));
     } catch (error) {
-      console.error("Error in selectAllProjects:", error);
+      console.error("Error in selectAllProjectsMetadata:", error);
       if (error instanceof FirebaseError) {
         console.error("Firebase error code:", error.code);
         console.error("Firebase error message:", error.message);
@@ -105,23 +110,25 @@ const projectDB = {
       } else if (error instanceof Error) {
         console.error("Error name:", error.name);
         console.error("Error message:", error.message);
-        throw new Error(`Error while querying projects: ${error.message}`);
+        throw new Error(
+          `Error while selecting all projects metadata: ${error.message}`
+        );
       } else {
         console.error("Unknown error:", error);
-        throw new Error("Unknown error occurred while querying projects");
+        throw new Error(
+          "Unknown error occurred while selecting all projects metadata"
+        );
       }
     }
   },
   async deleteProject(userId: string, projectId: string): Promise<void> {
-    const projectRef = doc(
-      firebaseDB,
-      PROJECTS_COLLECTION,
-      userId,
-      WEBSITE_PROJECT_COLLECTION,
-      projectId
-    ).withConverter(projectInfoConverter);
     try {
-      await deleteDoc(projectRef);
+      const projectRef = adminFirebaseDB
+        .collection(PROJECTS_COLLECTION)
+        .doc(userId)
+        .collection(INFO_COLLECTION)
+        .doc(projectId);
+      await projectRef.delete();
     } catch (error) {
       throw new Error(
         "Unknown error occured while deleting project",
@@ -134,22 +141,50 @@ const projectDB = {
     projectId: string,
     newName: string
   ): Promise<ProjectInfo | null> {
-    const projectRef = doc(
-      firebaseDB,
-      PROJECTS_COLLECTION,
-      userId,
-      WEBSITE_PROJECT_COLLECTION,
-      projectId
-    ).withConverter(projectInfoConverter);
     try {
-      await updateDoc(projectRef, { name: newName });
-      const updatedProject = await this.selectProject(userId, projectId);
-      return updatedProject;
+      const projectRef = adminFirebaseDB
+        .collection(PROJECTS_COLLECTION)
+        .doc(userId)
+        .collection(INFO_COLLECTION)
+        .doc(projectId);
+      await projectRef.update({ name: newName });
+      return this.selectProjectInfo(userId, projectId);
     } catch (error) {
       throw new Error(
         "Unknown error occurred while updating project name",
         error as Error
       );
+    }
+  },
+  // Page collection
+  // TODO:FIX withConverter converter
+  async insertProgectPage(userId: string) {},
+  async selectProjectPage(
+    userId: string,
+    projectId: string
+  ): Promise<any | null> {
+    try {
+      const projectRef = adminFirebaseDB
+        .collection(PROJECTS_COLLECTION)
+        .doc(userId)
+        .collection(PAGE_COLLECTION)
+        .doc(projectId);
+      // .withConverter(projectInfoConverter);
+      const docSnap = await projectRef.get();
+      return docSnap.exists ? docSnap.data() : null;
+    } catch (error) {
+      if (error instanceof FirebaseError) {
+        console.error("Firebase error:", error.code, error.message);
+        throw new Error(
+          `Firebase error while selecting project: ${error.message}`
+        );
+      } else {
+        console.error("Unknown error:", error as Error);
+        throw new Error(
+          "Unknown error occured while selecting project page",
+          error as Error
+        );
+      }
     }
   },
 };

@@ -1,16 +1,8 @@
 import {
-  FirestoreDataConverter,
-  QueryDocumentSnapshot,
-  SnapshotOptions,
-  DocumentData,
-} from "firebase/firestore";
-import {
-  getFirestore,
   Timestamp,
   FirestoreDataConverter as AdminFirestoreDataConverter,
   QueryDocumentSnapshot as AdminQueryDocumentSnapshot,
 } from "firebase-admin/firestore";
-
 import type {
   ProjectInfo,
   ProjectMetadata,
@@ -37,33 +29,27 @@ const convertKeys = (obj: any, converter: (key: string) => string): any => {
 };
 
 // Project converter
-const projectInfoConverter: FirestoreDataConverter<ProjectInfo> = {
-  toFirestore(projectInfo: ProjectInfo): DocumentData {
+const projectInfoConverter: AdminFirestoreDataConverter<ProjectInfo> = {
+  toFirestore(projectInfo: ProjectInfo) {
     const converted = convertKeys(projectInfo, toSnakeCase);
     Object.keys(converted).forEach(
       (key) => converted[key] === undefined && delete converted[key]
     );
     return converted;
   },
-  fromFirestore(
-    snapshot: QueryDocumentSnapshot,
-    options: SnapshotOptions
-  ): ProjectInfo {
-    const data = snapshot.data(options);
+  fromFirestore(snapshot: AdminQueryDocumentSnapshot): ProjectInfo {
+    const data = snapshot.data();
     const converted = convertKeys(data, toCamelCase);
     return converted as ProjectInfo;
   },
 };
 
-const projectMetadataConverter: FirestoreDataConverter<ProjectMetadata> = {
-  toFirestore(projectMetadata: ProjectMetadata): DocumentData {
+const projectMetadataConverter: AdminFirestoreDataConverter<ProjectMetadata> = {
+  toFirestore(projectMetadata: ProjectMetadata) {
     return projectMetadata;
   },
-  fromFirestore(
-    snapshot: QueryDocumentSnapshot,
-    options: SnapshotOptions
-  ): ProjectMetadata {
-    const data = snapshot.data(options);
+  fromFirestore(snapshot: AdminQueryDocumentSnapshot): ProjectMetadata {
+    const data = snapshot.data();
     return {
       projectId: snapshot.id,
       name: data.name,

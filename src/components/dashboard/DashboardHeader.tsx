@@ -24,14 +24,7 @@ const ActionContainer = styled.div`
   gap: 0.5rem;
 `;
 
-const FeedbackIcon = styled.img`
-  width: 1.5rem;
-  height: 1.5rem;
-  cursor: pointer;
-  margin-left: 0.5rem;
-`;
-
-const DashboardHeader = () => {
+const DashboardHeader: React.FC = () => {
   return (
     <HeaderContainer>
       <Title>Recents</Title>
