@@ -63,3 +63,10 @@ onUnmounted(() => {
 <template>
   <div ref="vMapEl" class="w-full h-full"></div>
 </template>
+
+<style>
+.leaflet-control-attribution,
+.leaflet-control-attribution a {
+  color: var(--p-stone-600) !important;
+}
+</style>
