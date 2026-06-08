@@ -68,8 +68,9 @@
       "description": "探索平台上精選的神社，開始你的御朱印之旅。"
     },
     "detail": {
-      "info": "關於",
+      "goshrine": "御朱印",
       "openingHours": "開放時間",
+      "pilgrimageCircuit": "諸國一宮巡禮",
       "access": "交通方式",
       "website": "官方網站",
       "enshrineDeity": "祭神",

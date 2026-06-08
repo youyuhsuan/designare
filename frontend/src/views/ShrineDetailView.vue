@@ -1,226 +1,249 @@
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
+import { onMounted } from "vue";
+import { useRoute } from "vue-router";
 // I18n
 import { useI18n } from "vue-i18n";
 // Composables
 import useApiShrines from "@/composables/api/useApiShrines";
 import useAsyncState from "@/composables/useAsyncState";
-import useAsyncAction from "@/composables/useAsyncAction";
-// Stores
-import useAuthStore from "@/stores/auth.store";
+// Components
+import Image from "@/components/common/Image.vue";
+import Map from "@/components/shrines/Map.vue";
+import ShrineDetailSkeleton from "@/components/shrines/ShrineDetailSkeleton.vue";
 // Utils
 import { formatAddress } from "@/utils/formatUI";
 // Config
 import ROUTE_CONFIGS from "@/config/routeConfig";
+// Store
+import useSettingStore from "@/stores/setting.store";
 
 const { t } = useI18n();
 const route = useRoute();
-const router = useRouter();
-const authStore = useAuthStore();
+const settingStore = useSettingStore();
 const { getShrine } = useApiShrines();
 
-const shrineId = route.params.id as string;
-
 const shrineState = useAsyncState(() =>
-  getShrine(shrineId).then((r) => r.data),
+  getShrine(route.params.id).then((r) => r.data),
 );
 
-const visitDate = ref<Date | null>(null);
-const notes = ref("");
-const isVisited = ref(false);
-const isWishlisted = ref(false);
-
-const saveRecord = useAsyncAction(
-  async () => {
-    // TODO: wire to POST /api/users/:id/collections when backend is ready
-    await new Promise<void>((resolve) => setTimeout(resolve, 500));
+const localeTrackingClass = {
+  backToExplore: {
+    zh: "tracking-[0.2em]",
+    en: "tracking-wide",
   },
-  { successMessage: t("shrines.detail.saveSuccess") },
-);
+  category: { zh: "tracking-[0.2em]", en: "tracking-wide" },
+  pilgrimageCircuit: {
+    zh: "tracking-[0.25em]",
+    en: "tracking-widest",
+  },
+  label: {
+    zh: "tracking-[0.3em]",
+    en: "tracking-wider",
+  },
+};
 
-onMounted(() => shrineState.execute());
+onMounted(async () => {
+  await shrineState.execute();
+});
 </script>
 
 <template>
-  <main class="w-full pb-32" :aria-label="t('shrines.detail.ariaLabel.page')">
+  <main class="w-full" :aria-label="t('shrines.detail.ariaLabel.page')">
     <!-- Loading -->
-    <template v-if="shrineState.isLoading.value">
-      <div class="px-6 md:px-16 lg:px-32 pt-10 space-y-6">
-        <Skeleton height="1rem" width="8rem" />
-        <Skeleton height="4rem" width="20rem" />
-        <Skeleton height="0.75rem" width="12rem" />
-      </div>
-      <div class="mt-10">
-        <Skeleton class="w-full" height="26rem" />
-      </div>
-    </template>
+    <ShrineDetailSkeleton v-if="shrineState.isLoading.value">
+    </ShrineDetailSkeleton>
 
-    <!-- Not Found -->
-    <template v-else-if="!shrineState.data.value">
-      <div
-        class="flex flex-col items-center justify-center py-40 text-stone-300"
+    <template
+      v-else-if="!shrineState.isLoading.value && shrineState.data.value"
+    >
+      <!-- Benefits bar -->
+      <section
+        class="border-b-2 border-stone-500 dark:border-stone-500 flex justify-between px-6 md:px-16 lg:px-32"
       >
-        <i class="pi pi-inbox text-5xl mb-4 opacity-40" />
-        <p class="tracking-widest text-sm uppercase">{{ t("common.empty") }}</p>
-        <button
-          class="mt-8 text-xs text-stone-400 tracking-[0.2em] uppercase hover:text-primary-500 transition flex items-center gap-2"
-          @click="router.push(ROUTE_CONFIGS.SHRINES)"
+        <!-- Back to Shrines -->
+        <router-link
+          class="flex items-center hover:text-primary-500 gap-1.5 text-[10px] text-stone-400 dark:text-stone-400 py-2.5"
+          :class="
+            localeTrackingClass.backToExplore[settingStore.currentLanguage]
+          "
+          :to="ROUTE_CONFIGS.SHRINES"
           v-cursor-hover
         >
-          <i class="pi pi-arrow-left text-[10px]" />
+          <i class="pi pi-arrow-left text-xs" />
           {{ t("shrines.detail.backToExplore") }}
-        </button>
-      </div>
-    </template>
+        </router-link>
 
-    <!-- Content -->
-    <template v-else>
-      <!--  Header  -->
-      <section class="w-full border-4 border-primary-500 p-0.5">
+        <!-- Category -->
         <div
-          class="border border-primary-500 py-2 flex flex-col gap-2 items-center justify-center"
+          class="grid border-l border-stone-500 dark:border-stone-500"
+          :style="{
+            gridTemplateColumns: `repeat(${shrineState.data.value.benefits.length}, 1fr)`,
+          }"
         >
-          <h1
-            class="text-xl md:text-4xl tracking-[0.4em] font-medium text-primary-500"
-          >
-            {{ shrineState.data.value.name }}
-          </h1>
-          <p class="text-stone-400 text-xs tracking-[0.3em] uppercase">
-            {{ formatAddress(shrineState.data.value) }}
-          </p>
-        </div>
-      </section>
-
-      <!-- Hero Image -->
-      <section
-        class="relative h-72 md:h-[28rem] w-full overflow-hidden bg-stone-100 mb-16"
-      >
-        <img
-          v-if="shrineState.data.value.imageUrl"
-          class="w-full h-full object-cover"
-          :src="shrineState.data.value.imageUrl"
-          :alt="shrineState.data.value.name"
-        />
-        <div
-          v-else
-          class="w-full h-full flex items-center justify-center text-stone-200"
-        >
-          <i class="pi pi-image text-7xl" />
-        </div>
-        <div
-          class="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"
-        />
-
-        <!-- Action buttons -->
-        <div
-          v-if="authStore.isAuthenticated"
-          class="absolute bottom-4 right-4 flex items-center gap-3 shrink-0"
-        >
-          <button
-            class="flex items-center gap-2 px-5 py-2 text-xs tracking-widest uppercase border transition-colors"
-            :class="
-              isWishlisted
-                ? 'border-red-400 text-red-500 bg-red-50 dark:bg-red-950/20'
-                : 'border-stone-300 text-stone-500 hover:border-red-400 hover:text-red-500 dark:border-stone-700 dark:text-stone-400'
-            "
-            @click="isWishlisted = !isWishlisted"
-            v-cursor-hover
-          >
-            <i :class="isWishlisted ? 'pi pi-heart-fill' : 'pi pi-heart'" />
-            <span>{{ t("shrines.detail.wishlist") }}</span>
-          </button>
-          <button
-            class="flex items-center gap-2 px-5 py-2 text-xs tracking-widest uppercase border transition-colors"
-            :class="
-              isVisited
-                ? 'border-primary-400 text-primary-600 bg-primary-50 dark:bg-primary-950/20'
-                : 'border-stone-300 text-stone-500 hover:border-primary-400 hover:text-primary-600 dark:border-stone-700 dark:text-stone-400'
-            "
-            @click="isVisited = !isVisited"
-            v-cursor-hover
-          >
-            <i :class="isVisited ? 'pi pi-check-circle' : 'pi pi-circle'" />
-            <span>{{ t("shrines.detail.visited") }}</span>
-          </button>
-        </div>
-      </section>
-
-      <!-- ── Info  ── -->
-      <section class="px-6 md:px-16 lg:px-32">
-        <!-- category -->
-        <div class="flex flex-wrap gap-2 mb-6">
           <template
             v-for="benefit in shrineState.data.value.benefits"
             :key="benefit"
           >
-            <span
-              class="bg-primary-200 dark:bg-primary-900/20 text-stone-500 dark:text-primary-400 py-1 px-3 text-xs tracking-wider uppercase"
-            >
-              {{ benefit }}
-            </span>
+            <div class="border-r border-stone-500 dark:border-stone-500">
+              <div class="w-full h-full flex items-center justify-center">
+                <span
+                  class="text-[10px] text-stone-600 dark:text-stone-600 text-center py-2.5 px-2.5"
+                  :class="
+                    localeTrackingClass.category[settingStore.currentLanguage]
+                  "
+                >
+                  {{ benefit }}
+                </span>
+              </div>
+            </div>
           </template>
+        </div>
+      </section>
+
+      <!-- Map + Content section -->
+      <section
+        class="flex h-[85vh] border-b-2 border-stone-500 dark:border-stone-500 mb-12 bg-stone-100 dark:bg-stone-100"
+      >
+        <!-- Map -->
+        <Map
+          class="flex-[2]"
+          :longitude="shrineState.data.value.longitude"
+          :latitude="shrineState.data.value.latitude"
+        />
+
+        <!-- Content -->
+        <div
+          class="flex flex-col flex-[3] border-l-2 border-stone-500 dark:border-stone-500"
+        >
+          <!--  Header  -->
+          <div
+            class="w-full border-b-2 border-stone-500 dark:border-stone-500 p-2"
+          >
+            <div
+              class="relative border border-stone-500 dark:border-stone-500 py-6 flex flex-col gap-y-3 items-center justify-center overflow-hidden"
+            >
+              <h1
+                class="text-xl md:text-2xl lg:text-5xl font-bold tracking-wider text-primary-500 dark:text-primary-500"
+              >
+                {{ shrineState.data.value.name }}
+              </h1>
+              <p
+                class="text-sm text-stone-600 dark:text-stone-600 tracking-wider uppercase"
+              >
+                {{ formatAddress(shrineState.data.value) }}
+              </p>
+            </div>
+          </div>
+
+          <!-- Image -->
+          <Image
+            :imageWrapperClass="'w-full h-full p-6 bg-stone-300 dark:bg-stone-300'"
+            :imageClass="'w-full h-full object-cover object-center'"
+            :imageUrl="shrineState.data.value.imageUrl"
+            :name="shrineState.data.value.name"
+          />
+        </div>
+      </section>
+
+      <!-- Info section -->
+      <section class="px-6 md:px-16 lg:px-32 mb-16">
+        <div class="flex items-center justify-between mb-8">
+          <!-- Pilgrimage circuit tag -->
+          <span
+            class="inline-flex items-center gap-2 bg-stone-100 dark:bg-stone-100 px-3 py-1 text-stone-500 dark:text-stone-500"
+            :class="
+              localeTrackingClass.pilgrimageCircuit[
+                settingStore.currentLanguage
+              ]
+            "
+          >
+            {{ t("shrines.detail.pilgrimageCircuit") }}
+          </span>
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
-          <!-- Description -->
-          <div class="lg:col-span-2">
-            <div class="flex items-center gap-3 mb-6">
-              <span class="h-px w-6 bg-primary-400" />
-              <span
-                class="text-xs tracking-[0.25em] text-primary-500 uppercase font-medium"
+          <div class="lg:col-span-2 flex flex-col gap-10">
+            <!-- Description -->
+            <div class="w-full">
+              <p
+                class="text-stone-700 dark:text-stone-700 leading-[2] tracking-wide"
               >
-                {{ t("shrines.detail.info") }}
-              </span>
+                {{ shrineState.data.value.description ?? "—" }}
+              </p>
             </div>
-            <p
-              v-if="shrineState.data.value.description"
-              class="text-stone-600 dark:text-stone-300 leading-[2] tracking-wide text-sm"
-            >
-              {{ shrineState.data.value.description }}
-            </p>
-            <p v-else class="text-stone-300 text-sm">—</p>
+
+            <!-- Goshrines Description -->
+            <div class="w-full flex flex-col gap-3">
+              <h2
+                class="text-[10px] text-stone-600 dark:text-stone-600"
+                :class="localeTrackingClass.label[settingStore.currentLanguage]"
+              >
+                {{ t("shrines.detail.goshrine") }}
+              </h2>
+
+              <div class="grid grid-cols-1 lg:grid-cols-3 gap-1.5">
+                <div>
+                  <!-- <Image
+                    :imageWrapperClass="'w-full p-2 bg-stone-400 dark:bg-stone-400'"
+                    :imageClass="'object-contain'"
+                    :imageUrl="goshrine"
+                    :name="shrineState.data.value.name"
+                  ></Image> -->
+                </div>
+              </div>
+            </div>
           </div>
 
-          <!-- Details sidebar -->
+          <!-- Details -->
           <div
-            class="flex flex-col gap-7 text-sm border-l border-stone-100 dark:border-stone-800 pl-8 lg:pl-12"
+            class="flex flex-col gap-7 border-stone-200 dark:border-stone-200 border-l pl-12"
           >
+            <!-- OpeningHours -->
             <div v-if="shrineState.data.value.openingHours">
               <p
-                class="text-[10px] text-stone-400 tracking-[0.3em] uppercase mb-2"
+                class="text-[10px] text-stone-700 dark:text-stone-700 mb-2"
+                :class="localeTrackingClass.label[settingStore.currentLanguage]"
               >
                 {{ t("shrines.detail.openingHours") }}
               </p>
-              <p class="text-stone-700 dark:text-stone-300 tracking-wide">
+              <p class="text-stone-700 dark:text-stone-700 tracking-wide">
                 {{ shrineState.data.value.openingHours }}
               </p>
             </div>
+
+            <!-- Access -->
             <div v-if="shrineState.data.value.access">
               <p
-                class="text-[10px] text-stone-400 tracking-[0.3em] uppercase mb-2"
+                class="text-[10px] text-stone-500 dark:text-stone-500 mb-2"
+                :class="localeTrackingClass.label[settingStore.currentLanguage]"
               >
                 {{ t("shrines.detail.access") }}
               </p>
               <p
-                class="text-stone-700 dark:text-stone-300 tracking-wide leading-relaxed"
+                class="text-stone-700 dark:text-stone-700 tracking-wide leading-relaxed"
               >
                 {{ shrineState.data.value.access }}
               </p>
             </div>
+
+            <!-- Founded -->
             <div v-if="shrineState.data.value.founded">
               <p
-                class="text-[10px] text-stone-400 tracking-[0.3em] uppercase mb-2"
+                class="text-[10px] text-stone-500 dark:text-stone-500 mb-2"
+                :class="localeTrackingClass.label[settingStore.currentLanguage]"
               >
                 {{ t("shrines.detail.founded") }}
               </p>
-              <p class="text-stone-700 dark:text-stone-300 tracking-wide">
+              <p class="text-stone-700 dark:text-stone-700 tracking-wide">
                 {{ shrineState.data.value.founded }}
               </p>
             </div>
+
+            <!-- EnshrineDeity -->
             <div v-if="shrineState.data.value.enshrineDeity?.length">
               <p
-                class="text-[10px] text-stone-400 tracking-[0.3em] uppercase mb-2"
+                class="text-[10px] text-stone-500 dark:text-stone-500 mb-2"
+                :class="localeTrackingClass.label[settingStore.currentLanguage]"
               >
                 {{ t("shrines.detail.enshrineDeity") }}
               </p>
@@ -228,27 +251,33 @@ onMounted(() => shrineState.execute());
                 <li
                   v-for="deity in shrineState.data.value.enshrineDeity"
                   :key="deity"
-                  class="text-stone-700 dark:text-stone-300 text-sm tracking-wide leading-relaxed"
+                  class="text-stone-700 dark:text-stone-700 tracking-wide leading-relaxed"
                 >
                   {{ deity }}
                 </li>
               </ul>
             </div>
+
+            <!-- Address -->
             <div v-if="shrineState.data.value.address">
               <p
-                class="text-[10px] text-stone-400 tracking-[0.3em] uppercase mb-2"
+                class="text-[10px] text-stone-500 dark:text-stone-500 mb-2"
+                :class="localeTrackingClass.label[settingStore.currentLanguage]"
               >
                 {{ t("shrines.detail.address") }}
               </p>
               <p
-                class="text-stone-700 dark:text-stone-300 tracking-wide leading-relaxed text-sm"
+                class="text-stone-700 dark:text-stone-700 tracking-wide leading-relaxed"
               >
                 {{ shrineState.data.value.address }}
               </p>
             </div>
+
+            <!-- Website -->
             <div v-if="shrineState.data.value.website">
               <p
-                class="text-[10px] text-stone-400 tracking-[0.3em] uppercase mb-2"
+                class="text-[10px] text-stone-700 dark:text-stone-700 mb-2"
+                :class="localeTrackingClass.label[settingStore.currentLanguage]"
               >
                 {{ t("shrines.detail.website") }}
               </p>
