@@ -16,7 +16,7 @@ const props = withDefaults(
     errorClass: "text-white/60 dark:text-white/60",
   },
 );
-const isLoading = ref<boolean>(!!props.imageUrl ?? true);
+const isLoading = ref<boolean>(!!props.imageUrl);
 </script>
 
 <template>
