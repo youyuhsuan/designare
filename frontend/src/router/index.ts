@@ -93,9 +93,9 @@ const router = createRouter({
       },
     },
     {
-      path: ROUTE_CONFIGS.SEARCH,
-      name: "search",
-      component: () => import("@/views/SearchView.vue"),
+      path: ROUTE_CONFIGS.SHRINES,
+      name: "shrines",
+      component: () => import("@/views/shrine/ShrineView.vue"),
     },
   ],
 });
