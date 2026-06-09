@@ -67,6 +67,29 @@
       "label": "精選推薦",
       "description": "探索平台上精選的神社，開始你的御朱印之旅。"
     },
+    "detail": {
+      "goshrine": "御朱印",
+      "openingHours": "開放時間",
+      "pilgrimageCircuit": "諸國一宮巡禮",
+      "access": "交通方式",
+      "website": "官方網站",
+      "enshrineDeity": "祭神",
+      "founded": "創建年",
+      "address": "地址",
+      "myRecord": "我的記錄",
+      "visitDate": "參拜日期",
+      "notes": "筆記",
+      "notesPlaceholder": "記錄你的參拜心得...",
+      "save": "儲存記錄",
+      "saveSuccess": "記錄已儲存",
+      "wishlist": "收藏",
+      "visited": "已參拜",
+      "loginPrompt": "登入以記錄您的參拜",
+      "backToExplore": "返回探索",
+      "ariaLabel": {
+        "page": "神社詳細頁"
+      }
+    },
     "ariaLabel": {
       "page": "神社列表頁",
       "shrineCard": "查看 {name}"

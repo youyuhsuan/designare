@@ -67,6 +67,29 @@
       "label": "Featured today",
       "description": "Explore shrines featured on our platform and start your goshuin journey."
     },
+    "detail": {
+      "goshrine": "Goshrine",
+      "openingHours": "Opening Hours",
+      "pilgrimageCircuit": "Pilgrimage to the Ichinomiya of all provinces",
+      "access": "Access",
+      "website": "Official Website",
+      "enshrineDeity": "Enshrined Deity",
+      "founded": "Founded",
+      "address": "Address",
+      "myRecord": "My Record",
+      "visitDate": "Visit Date",
+      "notes": "Notes",
+      "notesPlaceholder": "Share your experience...",
+      "save": "Save Record",
+      "saveSuccess": "Record saved",
+      "wishlist": "Wishlist",
+      "visited": "Visited",
+      "loginPrompt": "Login to record your visit",
+      "backToExplore": "Back to Explore",
+      "ariaLabel": {
+        "page": "Shrine detail page"
+      }
+    },
     "ariaLabel": {
       "page": "Shrines page",
       "shrineCard": "View {name}"
