@@ -9,11 +9,13 @@ const props = withDefaults(
     imageClass?: string;
     imageWrapperClass?: string;
     errorClass?: string;
+    loading?: "lazy" | "eager";
   }>(),
   {
     imageWrapperClass: "w-full h-full",
     imageClass: "w-full h-full object-cover",
     errorClass: "text-white/60 dark:text-white/60",
+    loading: "eager",
   },
 );
 const isLoading = ref<boolean>(!!props.imageUrl);
@@ -29,11 +31,15 @@ const isLoading = ref<boolean>(!!props.imageUrl);
 
     <!-- Image -->
     <img
-      v-show="imageUrl && !hasError && !isLoading"
-      :class="imageClass"
+      v-if="imageUrl && !hasError"
+      :class="[imageClass, { invisible: isLoading }]"
       :src="imageUrl"
       :alt="name"
-      @error="hasError = true"
+      :loading="loading"
+      @error="
+        hasError = true;
+        isLoading = false;
+      "
       @load="isLoading = false"
     />
 
