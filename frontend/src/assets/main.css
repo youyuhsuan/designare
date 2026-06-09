@@ -4,6 +4,10 @@
 @custom-variant dark (&:where(.app-dark, .app-dark *));
 
 @theme {
+  --font-sans: "Elms Sans", sans-serif;
+  --font-ja:
+    "Noto Serif TC", "Zen Old Mincho", "Hiragino Mincho ProN", Georgia, serif;
+
   --color-stone-50: #faf8f6;
   --color-stone-100: #f3efeb;
   --color-stone-200: #e8e2db;
@@ -14,6 +18,7 @@
   --color-stone-700: #4a4239;
   --color-stone-800: #302a24;
   --color-stone-900: #1a1612;
+  --color-stone-950: #0d0a08;
 }
 
 .app-dark {
@@ -27,4 +32,22 @@
   --color-stone-700: #c4bab0;
   --color-stone-800: #e0dad4;
   --color-stone-900: #f5f2ef;
+  --color-stone-950: #faf8f6;
+}
+
+html:lang(zh),
+html:lang(ja) {
+  font-family: var(--font-ja);
+}
+
+body {
+  min-height: 100vh;
+  line-height: 1.6;
+  font-size: 15px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  transition:
+    color 0.5s,
+    background-color 0.5s;
 }

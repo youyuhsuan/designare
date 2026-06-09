@@ -69,8 +69,9 @@ onMounted(() => {
   );
   window.addEventListener("visibilitychange", handleVisibilityChange);
 
-  // Apply the persisted theme on initial load so the UI reflects
+  // Apply the persisted theme and language on initial load
   settingStore.changeThemeMode(settingStore.userTheme);
+  settingStore.changeLanguage();
   window
     .matchMedia("(prefers-color-scheme: dark)")
     .addEventListener("change", onSystemThemeChange);

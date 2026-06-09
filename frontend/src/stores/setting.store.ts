@@ -61,7 +61,10 @@ const useSettingStore = defineStore(
     const { locale } = useI18n();
     const currentLanguage = ref<Locale>(locale.value);
 
-    const changeLanguage = () => (locale.value = currentLanguage.value);
+    const changeLanguage = () => {
+      locale.value = currentLanguage.value;
+      document.documentElement.lang = currentLanguage.value;
+    };
 
     return {
       cursor,
