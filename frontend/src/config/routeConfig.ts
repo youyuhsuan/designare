@@ -9,7 +9,6 @@ const ROUTE_CONFIGS = {
   OAUTH: "/oauth/callback",
   SETTING: "/settings",
   SHRINES: "/shrines",
-  SEARCH: "/search",
 } as const;
 
 export default ROUTE_CONFIGS;
