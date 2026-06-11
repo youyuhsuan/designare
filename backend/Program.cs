@@ -64,15 +64,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 RsaKeyHelper.LoadPublicKey(builder.Configuration)
             )
         };
-
-        options.Events = new JwtBearerEvents
-        {
-            OnMessageReceived = context =>
-            {
-                context.Token = context.Request.Cookies["access_token"];
-                return Task.CompletedTask;
-            }
-        };
     });
 
 // Configure global validation error handling for API controllers
@@ -168,7 +159,7 @@ if (app.Environment.IsDevelopment())
 
     using var scope = app.Services.CreateScope();
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    context.Database.EnsureCreated();
+    await context.Database.MigrateAsync();
     await DataSeeder.SeedShrinesAsync(context, app.Logger);
 }
 else

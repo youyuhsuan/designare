@@ -19,6 +19,7 @@ namespace backend.Models
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         public ICollection<ShrineTranslation> Translations { get; set; } = [];
+        public ICollection<ShrineImage> Images { get; set; } = [];
 
         // public ICollection<UserCollection> Collections { get; set; } = [];
     }

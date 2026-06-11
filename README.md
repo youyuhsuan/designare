@@ -1,10 +1,10 @@
-# Designare
+# Goshuincho
 
 A full-stack shrine discovery web application — browse, search, and explore Japanese shrines, with a complete authentication system including Google OAuth.
 
 ## Quick Links
 
-- [API Documentation]()
+- [API Documentation](http://localhost:5286/swagger/index.html)
 - [Architecture Diagram]()
 
 ## Features
@@ -56,8 +56,8 @@ A full-stack shrine discovery web application — browse, search, and explore Ja
 1. Clone the repository:
 
 ```bash
-git clone https://github.com/yourusername/moneymind.git
-cd moneymind
+git clone https://github.com/yourusername/goshuincho.git
+cd goshuincho
 ```
 
 2. Install the required dependencies and start the development server:

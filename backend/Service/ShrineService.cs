@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 
 using backend.Data;
@@ -36,6 +37,7 @@ namespace backend.Services
                 .Select(s => new ShrineDto
                 {
                     Id = s.Id,
+                    ImageUrl = s.Images.Select(i => i.Url).FirstOrDefault() ?? string.Empty,
                     Name = s.Translations
                         .Where(t => t.Locale == locale)
                         .Select(t => t.Name)
@@ -56,9 +58,8 @@ namespace backend.Services
                 .ToListAsync();
         }
 
-        public async Task<PagedResult<ShrineDto>> GetShrinesAsync(ShrineSearchRequest request)
+        public async Task<PagedResult<ShrineDto>> GetShrinesAsync(ShrineSearchRequest request, string locale = "en")
         {
-            string locale = request.Locale;
             int pageSize = Math.Clamp(request.PageSize, 1, 50);
             int currentPage = Math.Max(1, request.Page);
             int offset = (currentPage - 1) * pageSize;
@@ -93,6 +94,7 @@ namespace backend.Services
                     .Select(s => new ShrineDto
                     {
                         Id = s.Id,
+                        ImageUrl = s.Images.Select(i => i.Url).FirstOrDefault() ?? string.Empty,
                         Name = s.Translations
                             .Where(t => t.Locale == locale)
                             .Select(t => t.Name)
@@ -134,6 +136,7 @@ namespace backend.Services
                 .Select(s => new ShrineDto
                 {
                     Id = s.Id,
+                    ImageUrl = s.Images.Select(i => i.Url).FirstOrDefault() ?? string.Empty,
                     Name = s.Translations
                         .Where(t => t.Locale == locale)
                         .Select(t => t.Name)
@@ -160,6 +163,48 @@ namespace backend.Services
                 CurrentPage = currentPage,
                 PageSize = pageSize,
             };
+        }
+
+        public async Task<ShrineDetailDto?> GetShrineByIdAsync(Guid id, string locale = "en")
+        {
+            var shrine = await _context.Shrines
+                .Include(s => s.Translations)
+                .Include(s => s.Images)
+                .FirstOrDefaultAsync(s => s.Id == id);
+
+            if (shrine == null) return null;
+
+            var translation = shrine.Translations.FirstOrDefault(t => t.Locale == locale)
+                ?? shrine.Translations.FirstOrDefault(t => t.Locale == "en")
+                ?? shrine.Translations.FirstOrDefault();
+
+            if (translation == null) return null;
+
+            return new ShrineDetailDto
+            {
+                Id = shrine.Id,
+                Name = translation.Name,
+                ImageUrl = shrine.Images.Select(i => i.Url).FirstOrDefault(),
+                Region = translation.Region,
+                Prefecture = translation.Prefecture,
+                City = translation.City,
+                Address = translation.Address,
+                Description = translation.Description,
+                OpeningHours = translation.OpeningHours,
+                Access = translation.Access,
+                Website = shrine.Website,
+                Founded = shrine.Founded,
+                Latitude = shrine.Latitude,
+                Longitude = shrine.Longitude,
+                EnshrineDeity = DeserializeStringArray(translation.EnshrineDeity),
+                Benefits = DeserializeStringArray(translation.Benefits),
+            };
+        }
+
+        private static List<string> DeserializeStringArray(string? json)
+        {
+            if (string.IsNullOrWhiteSpace(json)) return [];
+            return JsonSerializer.Deserialize<List<string>>(json) ?? [];
         }
 
         private async Task<List<(Guid Id, double Lat, double Lon)>> FetchCandidatesWithDynamicRadiusAsync(

@@ -8,7 +8,7 @@ namespace backend.Services
     {
         Task<IEnumerable<ShrineSuggestionDto>> GetSuggestionsByKeywordAsync(string keyword, string locale = "en");
         Task<IEnumerable<ShrineDto>> GetFeaturedAsync(string locale = "en");
-        Task<PagedResult<ShrineDto>> GetShrinesAsync(ShrineSearchRequest request);
-
+        Task<PagedResult<ShrineDto>> GetShrinesAsync(ShrineSearchRequest request, string locale = "en");
+        Task<ShrineDetailDto?> GetShrineByIdAsync(Guid id, string locale = "en");
     }
 }

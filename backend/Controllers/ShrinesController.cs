@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using backend.DTOs;
+using backend.DTOs.Responses;
 using backend.Services;
 using backend.DTOs.Requests;
 
@@ -22,6 +23,38 @@ namespace backend.Controllers
             _logger = logger;
         }
 
+        private static readonly HashSet<string> _supportedLocales =
+            new(["en", "zh"], StringComparer.OrdinalIgnoreCase);
+
+        private string GetLocale() =>
+            Request.Headers.AcceptLanguage
+                .FirstOrDefault()
+                ?.Split(',')[0]
+                .Split(';')[0]
+                .Trim()
+                is string tag && _supportedLocales.Contains(tag)
+                ? tag.ToLowerInvariant()
+                : "en";
+
+        /// <summary>
+        /// GET: api/shrines/{id}
+        /// Get shrine detail by ID
+        /// </summary>
+        /// <response code="200">Returns shrine detail</response>
+        /// <response code="404">Shrine not found</response>
+        [ProducesResponseType(typeof(ShrineDetailDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [HttpGet("{id:guid}")]
+        [AllowAnonymous]
+        public async Task<ActionResult<ShrineDetailDto>> GetShrine(Guid id)
+        {
+            var locale = GetLocale();
+            _logger.LogInformation("Shrine detail requested: id={Id}, locale={Locale}", id, locale);
+            var shrine = await _shrineService.GetShrineByIdAsync(id, locale);
+            if (shrine == null) return NotFound();
+            return Ok(shrine);
+        }
+
         /// <summary>
         /// GET: api/shrines/suggestions?keyword=
         /// Get shrine name suggestions for autocomplete
@@ -33,9 +66,9 @@ namespace backend.Controllers
         [HttpGet("suggestions")]
         [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<ShrineSuggestionDto>>> GetSuggestions(
-            [FromQuery] string keyword,
-            [FromQuery] string locale = "en")
+            [FromQuery] string keyword)
         {
+            var locale = GetLocale();
             if (string.IsNullOrWhiteSpace(keyword))
             {
                 _logger.LogWarning("GetSuggestions called with empty keyword");
@@ -55,9 +88,9 @@ namespace backend.Controllers
         [ProducesResponseType(typeof(IEnumerable<ShrineDto>), StatusCodes.Status200OK)]
         [HttpGet("featured")]
         [AllowAnonymous]
-        public async Task<ActionResult<IEnumerable<ShrineDto>>> GetFeaturedShrines(
-            [FromQuery] string locale = "en")
+        public async Task<ActionResult<IEnumerable<ShrineDto>>> GetFeaturedShrines()
         {
+            var locale = GetLocale();
             _logger.LogInformation("Featured shrines requested");
             var shrines = await _shrineService.GetFeaturedAsync(locale);
             return Ok(shrines);
@@ -84,7 +117,7 @@ namespace backend.Controllers
                 "Shrine search requested: shrine={Shrine}, page={Page}",
                 request.Shrine, request.Page);
 
-            var result = await _shrineService.GetShrinesAsync(request);
+            var result = await _shrineService.GetShrinesAsync(request, GetLocale());
 
             var paginationMeta = new
             {

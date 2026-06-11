@@ -18,3 +18,16 @@ export interface Shrine {
   region?: string;
   city?: string;
 }
+
+export interface ShrineDetail extends Shrine {
+  description?: string;
+  website?: string;
+  openingHours?: string;
+  access?: string;
+  address?: string;
+  founded?: string;
+  latitude?: number;
+  longitude?: number;
+  enshrineDeity?: string[];
+  benefits?: string[];
+}

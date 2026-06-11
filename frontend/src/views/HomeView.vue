@@ -83,7 +83,7 @@ onMounted(async () => {
         <h2
           class="text-2xl md:text-3xl font-light tracking-wider text-stone-700 mb-2"
         >
-          {{ t("home.featuredToday.title") }}
+          {{ t("home.featuredToday.heading") }}
         </h2>
         <p class="text-sm text-stone-400 tracking-wide">
           {{ t("home.featuredToday.description") }}

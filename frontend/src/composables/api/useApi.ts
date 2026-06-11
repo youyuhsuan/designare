@@ -5,6 +5,7 @@ import { API_CONFIG, API_ENDPOINTS } from "@/config/apiConfig";
 import handleError from "@/utils/errorHandler";
 // Store
 import useAuthStore from "@/stores/auth.store";
+import useSettingStore from "@/stores/setting.store";
 
 export const instance = axios.create({
   baseURL: API_CONFIG.BASE_URL,
@@ -17,19 +18,25 @@ export const authInstance = axios.create({
   withCredentials: true,
 });
 
+instance.interceptors.request.use((config) => {
+  config.headers["Accept-Language"] = useSettingStore().currentLanguage || "en";
+  return config;
+});
+
 // Global response error handling
 instance.interceptors.response.use(
   (response) => response,
-  async (error) => {
+  (error) => {
     return Promise.reject(handleError(error));
   },
 );
 
 // Attach access token to Authorization header for authenticated requests
-authInstance.interceptors.request.use(async (config) => {
+authInstance.interceptors.request.use((config) => {
   const authStore = useAuthStore();
 
   config.headers.Authorization = `Bearer ${authStore.accessToken}`;
+  config.headers["Accept-Language"] = useSettingStore().currentLanguage || "en";
   return config;
 });
 
@@ -52,35 +59,36 @@ const shouldSkipRefresh = (error: any) =>
 authInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
+    const originalRequest = error.config;
+
     if (
       error.response?.status === 401 &&
-      !error.config._retry &&
+      !originalRequest._retry &&
       shouldSkipRefresh(error)
     ) {
-      error.config._retry = true;
+      originalRequest._retry = true;
 
+      // If a refresh is already in progress, queue this request and wait
+      if (isRefreshing) {
+        return new Promise((resolve, reject) => {
+          failedQueue.push({ resolve, reject });
+        })
+          .then(() => authInstance(originalRequest))
+          .catch((err) => Promise.reject(err));
+      }
+
+      // This request wins the refresh lock
+      isRefreshing = true;
       try {
-        // Avoid multiple simultaneous refresh attempts
-        try {
-          if (!isRefreshing) {
-            isRefreshing = true;
-            await useAuthStore().refreshAccessToken();
-          } else {
-            await new Promise((resolve, reject) => {
-              failedQueue.push({ resolve, reject });
-            });
-          }
-          processQueue();
-        } catch (error: unknown) {
-          processQueue(error);
-        } finally {
-          isRefreshing = false;
-        }
-
-        return authInstance(error.config);
-      } catch {
-        const { default: useAuthStore } = await import("@/stores/auth.store");
-        useAuthStore().logout();
+        await useAuthStore().refreshAccessToken();
+        processQueue(); // unblock all queued requests
+        return authInstance(originalRequest);
+      } catch (refreshError) {
+        processQueue(refreshError); // reject all queued requests
+        await useAuthStore().logout(); // refresh is broken — log out
+        return Promise.reject(refreshError);
+      } finally {
+        isRefreshing = false; // only the lock owner resets the lock
       }
     }
 

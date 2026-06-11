@@ -27,6 +27,13 @@ const vAuthPopover = ref<InstanceType<typeof Popover> | null>(null);
 // User action menu items, isplayed in user profile popover (desktop) and mobile menu
 const baseMenuItems = computed<PrimeMenuItem[]>(() => [
   {
+    label: t("nav.search"),
+    icon: "pi pi-cog",
+    route: ROUTE_CONFIGS.SEARCH,
+    command: () => router.push(ROUTE_CONFIGS.SEARCH),
+    visible: true,
+  },
+  {
     label: t("nav.about"),
     icon: "pi pi-home",
     route: ROUTE_CONFIGS.ABOUT,
@@ -109,10 +116,6 @@ const cancelHidePopover = () => {
         v-ripple
         v-cursor-hover
       >
-        <i
-          class="pi pi-user leading-none transition-colors"
-          style="font-size: inherit"
-        />
         <span>{{ t("nav.login") }}</span>
       </router-link>
     </template>

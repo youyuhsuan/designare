@@ -15,6 +15,7 @@ namespace backend.Data
         public DbSet<PasswordResetToken> PasswordResetTokens => Set<PasswordResetToken>();
         public DbSet<Shrine> Shrines => Set<Shrine>();
         public DbSet<ShrineTranslation> ShrineTranslations => Set<ShrineTranslation>();
+        public DbSet<ShrineImage> ShrineImages => Set<ShrineImage>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -180,6 +181,27 @@ namespace backend.Data
                     .HasMaxLength(500);
             });
 
+            modelBuilder.Entity<ShrineImage>(entity =>
+            {
+                entity.ToTable("ShrineImages");
+                entity.HasKey(e => e.Id);
+
+                entity.Property(e => e.Id)
+                    .HasDefaultValueSql("NEWID()")
+                    .ValueGeneratedOnAdd();
+
+                entity.Property(e => e.Url)
+                    .IsRequired()
+                    .HasMaxLength(500);
+
+                entity.HasOne(e => e.Shrine)
+                    .WithMany(s => s.Images)
+                    .HasForeignKey(e => e.ShrineId)
+                    .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasIndex(e => e.ShrineId);
+            });
+
             modelBuilder.Entity<ShrineTranslation>(entity =>
             {
                 entity.ToTable("ShrineTranslations");
@@ -213,11 +235,25 @@ namespace backend.Data
                     .IsRequired(false)
                     .HasMaxLength(300);
 
+                entity.Property(e => e.Description)
+                    .IsRequired(false)
+                    .HasColumnType("nvarchar(max)");
+
+                entity.Property(e => e.OpeningHours)
+                    .IsRequired(false)
+                    .HasMaxLength(200);
+
+                entity.Property(e => e.Access)
+                    .IsRequired(false)
+                    .HasMaxLength(500);
+
                 entity.Property(e => e.EnshrineDeity)
-                    .IsRequired(false);
+                    .IsRequired(false)
+                    .HasColumnType("nvarchar(max)");
 
                 entity.Property(e => e.Benefits)
-                    .IsRequired(false);
+                    .IsRequired(false)
+                    .HasColumnType("nvarchar(max)");
 
                 entity.HasOne(e => e.Shrine)
                     .WithMany(s => s.Translations)

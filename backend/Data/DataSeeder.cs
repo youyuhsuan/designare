@@ -53,6 +53,9 @@ public static class DataSeeder
                 Website = string.IsNullOrEmpty(r.Website) ? null : r.Website,
             };
 
+            if (!string.IsNullOrEmpty(r.ImageUrl))
+                shrine.Images = [new ShrineImage { Url = r.ImageUrl }];
+
             shrine.Translations = r.Translations
                 .Select(kv => new ShrineTranslation
                 {
@@ -62,6 +65,9 @@ public static class DataSeeder
                     City = kv.Value.City,
                     Region = kv.Value.Region,
                     Address = kv.Value.Address,
+                    Description = kv.Value.Description,
+                    OpeningHours = kv.Value.OpeningHours,
+                    Access = kv.Value.Access,
                     EnshrineDeity = kv.Value.EnshrineDeity is { Length: > 0 }
                         ? JsonSerializer.Serialize(kv.Value.EnshrineDeity)
                         : null,
@@ -90,6 +96,7 @@ public static class DataSeeder
         public string? Founded { get; init; }
 
         public string? Website { get; init; }
+        public string? ImageUrl { get; init; }
 
         public Dictionary<string, TranslationRecord> Translations { get; init; } = [];
     }
@@ -101,6 +108,9 @@ public static class DataSeeder
         public string? City { get; init; }
         public string? Region { get; init; }
         public string? Address { get; init; }
+        public string? Description { get; init; }
+        public string? OpeningHours { get; init; }
+        public string? Access { get; init; }
         public string[]? EnshrineDeity { get; init; }
         public string[]? Benefits { get; init; }
     }

@@ -14,6 +14,7 @@
     "login": "Login",
     "settings": "Settings",
     "signOut": "Sign out",
+    "search": "Explore",
     "ariaLabel": {
       "home": "Go to homepage",
       "login": "Login to your account",
@@ -50,12 +51,14 @@
     },
     "featuredToday": {
       "title": "Featured today",
+      "heading": "Today's Picks",
       "subTitle": "Featured",
       "description": "Explore shrines featured on our platform and start your goshuin journey."
     }
   },
   "shrines": {
     "pageTitle": "Shrines",
+    "heading": "Explore Shrines",
     "search": {
       "resultsFor": "Results for \"{query}\"",
       "noResults": "No shrines matched your search"
@@ -63,6 +66,29 @@
     "featured": {
       "label": "Featured today",
       "description": "Explore shrines featured on our platform and start your goshuin journey."
+    },
+    "detail": {
+      "goshrine": "Goshrine",
+      "openingHours": "Opening Hours",
+      "pilgrimageCircuit": "Pilgrimage to the Ichinomiya of all provinces",
+      "access": "Access",
+      "website": "Official Website",
+      "enshrineDeity": "Enshrined Deity",
+      "founded": "Founded",
+      "address": "Address",
+      "myRecord": "My Record",
+      "visitDate": "Visit Date",
+      "notes": "Notes",
+      "notesPlaceholder": "Share your experience...",
+      "save": "Save Record",
+      "saveSuccess": "Record saved",
+      "wishlist": "Wishlist",
+      "visited": "Visited",
+      "loginPrompt": "Login to record your visit",
+      "backToExplore": "Back to Explore",
+      "ariaLabel": {
+        "page": "Shrine detail page"
+      }
     },
     "ariaLabel": {
       "page": "Shrines page",

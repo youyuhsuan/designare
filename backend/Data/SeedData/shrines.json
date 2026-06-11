@@ -62,7 +62,10 @@
           "Military Victory",
           "Land Creation",
           "Industrial Blessing"
-        ]
+        ],
+        "description": "Iwatsutsukowake Shrine is the Ichinomiya (first-rank shrine) of Mutsu Province, located on the sacred Hachiman-yama mountain in Ishikawa Town, Fukushima. One of Japan's oldest ritual sites with a history of approximately 10,000 years, the shrine grounds feature remarkable sacred rock formations including Mirror Rock, Turtle Stone, and a stone torii gate.",
+        "openingHours": null,
+        "access": "10-min walk from Banjo Ishikawa Station (JR Suigun Line). By car, approx. 30 min from Sukagawa IC (Tohoku Expressway)."
       }
     }
   },
@@ -97,7 +100,10 @@
         "city": "東白川郡棚倉町",
         "region": "八槻字大宮",
         "address": "〒963-5672 福島縣東白川郡棚倉町八槻大宮224",
-        "enshrineDeity": ["味耜高彦根命（農業之神）", "日本武尊（戰神）"],
+        "enshrineDeity": [
+          "味耜高彦根命（農業之神）",
+          "日本武尊（戰神）"
+        ],
         "benefits": [
           "交通安全",
           "五穀豐收",
@@ -124,7 +130,10 @@
           "Agricultural Blessing",
           "Good Relationships",
           "Longevity"
-        ]
+        ],
+        "description": "Yatsuki Tsutsukowake Shrine is one of the Ichinomiya shrines of Mutsu Province, designated as the middle shrine (Nakanomiya) of the three Kinkoku shrines along the Kuji River. Legend holds that Yamato Takeru established the shrine where his arrow landed after defeating local enemies, naming the site 'Yatsuki' (arrow landing). Its Otaue-sai rice-planting festival is designated a National Important Intangible Folk Cultural Property.",
+        "openingHours": null,
+        "access": "10-min walk from Kinkoku Station (JR Suigun Line)."
       }
     }
   },
@@ -144,7 +153,13 @@
           "味耜高彦根命（あじすきたかひこねのみこと）",
           "日本武尊（やまとたけるのみこと）"
         ],
-        "benefits": ["殖産興業", "家内安全", "戦勝祈願", "農業の神", "五穀豊穣"]
+        "benefits": [
+          "殖産興業",
+          "家内安全",
+          "戦勝祈願",
+          "農業の神",
+          "五穀豊穣"
+        ]
       },
       "zh": {
         "name": "馬場都々古別神社",
@@ -152,8 +167,17 @@
         "city": "東白川郡棚倉町",
         "region": "棚倉字馬場",
         "address": "〒963-6131 福島縣東白川郡棚倉町棚倉字馬場39",
-        "enshrineDeity": ["味耜高彦根命（農業之神）", "日本武尊（戰神）"],
-        "benefits": ["產業發展", "家內安全", "戰爭勝利", "農業保佑", "五穀豐收"]
+        "enshrineDeity": [
+          "味耜高彦根命（農業之神）",
+          "日本武尊（戰神）"
+        ],
+        "benefits": [
+          "產業發展",
+          "家內安全",
+          "戰爭勝利",
+          "農業保佑",
+          "五穀豐收"
+        ]
       },
       "en": {
         "name": "Baba Tsutsukowake Shrine",
@@ -171,7 +195,10 @@
           "Military Victory",
           "Agricultural Blessing",
           "Abundant Harvest"
-        ]
+        ],
+        "description": "Baba Tsutsukowake Shrine is the Ichinomiya (first-rank shrine) of Mutsu Province, located within the grounds of Tanagura Castle in Tanagura Town, Fukushima. It was relocated to its present site in 1624 by domain lord Niwa Nagashige during the construction of Tanagura Castle.",
+        "openingHours": null,
+        "access": "15-min walk from Iwaki Tanagura Station (JR Suigun Line). From Koriyama Station, approx. 60 min by JR Suigun Line."
       }
     }
   },
@@ -245,7 +272,10 @@
           "Longevity & Good Relationships",
           "Traffic Safety",
           "Agricultural & Industrial Prosperity"
-        ]
+        ],
+        "description": "Isasumi Shrine is the chief shrine of Iwashiro Province and the tutelary deity of the Aizu region in Fukushima Prefecture. One of the oldest shrines in the Tohoku region, it enshrines the founding deities of Japan and hosts numerous seasonal festivals and cultural events throughout the year.",
+        "openingHours": "9:00–16:00 (Treasure Hall and amulet shop)",
+        "access": null
       }
     }
   },
@@ -261,8 +291,16 @@
         "city": "飽海郡遊佐町",
         "region": "上蕨岡字松ヶ岡",
         "address": "〒999-8314 山形県飽海郡遊佐町上蕨岡字松ヶ岡51",
-        "enshrineDeity": ["大物忌神（おおものいみのかみ）"],
-        "benefits": ["五穀豊穣", "海上安全", "厄除開運", "農業開運", "火山鎮祭"]
+        "enshrineDeity": [
+          "大物忌神（おおものいみのかみ）"
+        ],
+        "benefits": [
+          "五穀豊穣",
+          "海上安全",
+          "厄除開運",
+          "農業開運",
+          "火山鎮祭"
+        ]
       },
       "zh": {
         "name": "鳥海山大物忌神社(蕨岡口之宮)",
@@ -270,7 +308,9 @@
         "city": "飽海郡遊佐町",
         "region": "上蕨岡字松ヶ岡",
         "address": "〒999-8314 山形縣飽海郡遊佐町上蕨岡字松ヶ岡51",
-        "enshrineDeity": ["大物忌神（稲穀之神，與倉稲魂命、豐受姫神同體）"],
+        "enshrineDeity": [
+          "大物忌神（稲穀之神，與倉稲魂命、豐受姫神同體）"
+        ],
         "benefits": [
           "五穀豐收",
           "海上安全",
@@ -285,14 +325,19 @@
         "city": "Shonai District, Yuza Town",
         "region": "Kamiwarabioka, Matsuoka",
         "address": "51 Matsuoka, Kamiwarabioka, Yuza Town, Shonai District, Yamagata Prefecture 999-8314, Japan",
-        "enshrineDeity": ["Omono-Imi no Kami (Deity of Grain and Bounty)"],
+        "enshrineDeity": [
+          "Omono-Imi no Kami (Deity of Grain and Bounty)"
+        ],
         "benefits": [
           "Abundant Harvest",
           "Maritime Safety",
           "Evil Removal & Fortune",
           "Agricultural Fortune",
           "Volcanic Pacification"
-        ]
+        ],
+        "description": "Chokaisan Omono-Imi Shrine is the Ichinomiya of the former Dewa Province, with its main sanctuary at the summit of Mount Chokai (2,236 m). The Warabioka Kuchinomiya branch shrine serves as a gateway to the sacred mountain, preserving centuries of mountain worship tradition in the Shonai region of Yamagata.",
+        "openingHours": "9:00–18:00 (main hall)",
+        "access": "10-min drive from Yuza Station (JR Uetsu Main Line). Parking for 20 vehicles available."
       }
     }
   },
@@ -314,7 +359,13 @@
           "経津主神（ふつぬしのかみ）",
           "志波彦神（しはひこのかみ）"
         ],
-        "benefits": ["安産守護", "延命長寿", "大漁", "東北鎮護", "交通安全"]
+        "benefits": [
+          "安産守護",
+          "延命長寿",
+          "大漁",
+          "東北鎮護",
+          "交通安全"
+        ]
       },
       "zh": {
         "name": "志波彦神社・鹽竈神社",
@@ -328,7 +379,13 @@
           "経津主神（武道之神）",
           "志波彦神"
         ],
-        "benefits": ["安產守護", "延命長壽", "大豐收", "東北鎮護", "交通安全"]
+        "benefits": [
+          "安產守護",
+          "延命長壽",
+          "大豐收",
+          "東北鎮護",
+          "交通安全"
+        ]
       },
       "en": {
         "name": "Shiwahiko Shrine & Shiogama Shrine",
@@ -348,7 +405,10 @@
           "Good Catch",
           "Protection of Northeast",
           "Traffic Safety"
-        ]
+        ],
+        "description": "Shiogama Shrine is the Ichinomiya of Mutsu Province and the guardian deity of the Tohoku region, enshrining the deities of maritime safety and safe childbirth. Located on Ichimori-yama hill in Shiogama City, the shrine is renowned for its 202 stone steps leading to the main hall and panoramic views of Matsushima Bay.",
+        "openingHours": "March–October: 5:00–18:00; November–February: 5:00–17:00",
+        "access": "15-min walk from Hon-Shiogama Station (JR Senseki Line, approx. 25 min from Sendai Station)."
       }
     }
   },
@@ -364,7 +424,9 @@
         "city": "奥州市水沢区",
         "region": "中上野町",
         "address": "〒023-0003 岩手県奥州市水沢区中上野町1-83",
-        "enshrineDeity": ["駒形大神（こまがたおおかみ）"],
+        "enshrineDeity": [
+          "駒形大神（こまがたおおかみ）"
+        ],
         "benefits": [
           "産業開発",
           "交通安全",
@@ -379,8 +441,16 @@
         "city": "奥州市水沢區",
         "region": "中上野町",
         "address": "〒023-0003 岩手縣奧州市水澤區中上野町1-83",
-        "enshrineDeity": ["駒形大神（馬之守護神）"],
-        "benefits": ["產業開發", "交通安全", "必勝祈願", "馬匹守護", "農業開運"]
+        "enshrineDeity": [
+          "駒形大神（馬之守護神）"
+        ],
+        "benefits": [
+          "產業開發",
+          "交通安全",
+          "必勝祈願",
+          "馬匹守護",
+          "農業開運"
+        ]
       },
       "en": {
         "name": "Komagata Shrine",
@@ -388,16 +458,22 @@
         "city": "Oshu City, Mizusawa Ward",
         "region": "Nakauwano-cho",
         "address": "1-83 Nakauwano-cho, Mizusawa Ward, Oshu City, Iwate Prefecture 023-0003, Japan",
-        "enshrineDeity": ["Komagata Okami (Deity of Horses)"],
+        "enshrineDeity": [
+          "Komagata Okami (Deity of Horses)"
+        ],
         "benefits": [
           "Industrial Development",
           "Traffic Safety",
           "Victory Prayer",
           "Horse Protection",
           "Agricultural Fortune"
-        ]
+        ],
+        "description": "Komagata Shrine is the Ichinomiya of the former Rikuchu Province, with origins dating back approximately 1,500 years to sacred Mount Komagatake. Listed in Japan's ancient Engishiki registry as a highly ranked shrine, it is dedicated to Komagata Okami, deity of horses and industry, and serves as the spiritual guardian of the Oshu Mizusawa region.",
+        "openingHours": "April–October: 5:30–18:00; November–March: 5:30–17:30 (amulets & goshuin 9:30–16:30)",
+        "access": "10-min walk from Mizusawa Station (JR Tohoku Main Line)."
       }
-    }
+    },
+    "imageUrl": "/images/kankoHanamaki.png"
   },
   {
     "latitude": 40.5934,
@@ -415,7 +491,13 @@
           "顕國魂神（あきつくにたまのかみ）",
           "多都比姫神（たつひひめのかみ）"
         ],
-        "benefits": ["津軽守護", "五穀豊穣", "開運", "安産祈願", "厄除け"]
+        "benefits": [
+          "津軽守護",
+          "五穀豊穣",
+          "開運",
+          "安産祈願",
+          "厄除け"
+        ]
       },
       "zh": {
         "name": "岩木山神社",
@@ -423,8 +505,17 @@
         "city": "弘前市",
         "region": "百沢字寺沢",
         "address": "〒036-1343 青森縣弘前市大字百澤字寺澤27",
-        "enshrineDeity": ["顕國魂神（津輕守護神）", "多都比姫神"],
-        "benefits": ["津輕守護", "五穀豐收", "開運", "安產祈願", "厄運消除"]
+        "enshrineDeity": [
+          "顕國魂神（津輕守護神）",
+          "多都比姫神"
+        ],
+        "benefits": [
+          "津輕守護",
+          "五穀豐收",
+          "開運",
+          "安產祈願",
+          "厄運消除"
+        ]
       },
       "en": {
         "name": "Iwakiyama Shrine",
@@ -442,9 +533,13 @@
           "Good Fortune",
           "Safe Childbirth",
           "Evil Removal"
-        ]
+        ],
+        "description": "Iwakiyama Shrine sits at the foot of Mount Iwaki (1,625 m), Aomori Prefecture's highest peak, known as 'Tsugaru Fuji.' With over 1,200 years of history, the shrine's ornate main hall and gate are designated Important Cultural Properties, and it serves as the spiritual protector of the Tsugaru region.",
+        "openingHours": "April–October: 8:00–17:00; November–March: 8:30–16:00",
+        "access": "Take Konan Bus from Hirosaki Station toward Karekidaira; 35-min ride to Iwakiyama-jinja-mae bus stop. By car, approx. 40 min from Owani Hirosaki IC (Tohoku Expressway)."
       }
-    }
+    },
+    "imageUrl": "/images/iwakiyama.png"
   },
   {
     "latitude": 43.062,
@@ -510,9 +605,13 @@
           "Industrial Promotion",
           "Safety Prayer",
           "Happiness Prayer"
-        ]
+        ],
+        "description": "Hokkaido Shrine is the most prestigious Shinto shrine in Hokkaido, founded in 1869 by imperial decree to enshrine the three pioneering deities who oversaw the island's development. Set within Maruyama Park in Sapporo, its grounds feature approximately 1,400 cherry trees and host the city's largest annual festival, the Sapporo Festival, each June.",
+        "openingHours": "June–August: 6:00–17:00; September–May: 9:00–16:00",
+        "access": "15-min walk from Maruyama-koen Station (Subway Tozai Line, approx. 7 min from Odori Station)."
       }
-    }
+    },
+    "imageUrl": "/images/hokkaido.png"
   },
   {
     "latitude": 35.3795,
@@ -530,7 +629,13 @@
           "寒川比古命（さむかわひこのみこと）",
           "寒川比女命（さむかわひめのみこと）"
         ],
-        "benefits": ["八方除け", "厄除け", "家内安全", "方位除け", "運気向上"]
+        "benefits": [
+          "八方除け",
+          "厄除け",
+          "家内安全",
+          "方位除け",
+          "運気向上"
+        ]
       },
       "zh": {
         "name": "寒川神社",
@@ -538,7 +643,10 @@
         "city": "高座郡寒川町",
         "region": "宮山",
         "address": "〒253-0195 神奈川縣高座郡寒川町宮山3916",
-        "enshrineDeity": ["寒川比古命（男神）", "寒川比女命（女神）"],
+        "enshrineDeity": [
+          "寒川比古命（男神）",
+          "寒川比女命（女神）"
+        ],
         "benefits": [
           "八方除（八個方向的厄運消除）",
           "厄運消除",
@@ -563,9 +671,13 @@
           "Family Protection",
           "Direction Fortune Removal",
           "Luck Improvement"
-        ]
+        ],
+        "description": "Samukawa Shrine is the Ichinomiya (first-rank shrine) of Sagami Province, with over 1,600 years of history. It is the only shrine in Japan dedicated exclusively to Happoyoke — spiritual protection from all eight directions — and has been revered by historical figures including Minamoto no Yoritomo, Takeda Shingen, and successive Tokugawa shoguns.",
+        "openingHours": "6:00 to sunset (charm shop 8:00–16:30)",
+        "access": "5-min walk from Miyayama Station (JR Sagami Line)."
       }
-    }
+    },
+    "imageUrl": "/images/wakiyama.png"
   },
   {
     "latitude": 35.3249,
@@ -628,8 +740,12 @@
           "Good Relationships",
           "Guardian of Warriors",
           "Kamakura Shogunate Protection"
-        ]
+        ],
+        "description": "Tsurugaoka Hachimangu is Kamakura's most iconic shrine, originally founded in 1063 and relocated to its current site in 1180 by Minamoto no Yoritomo when he established the Kamakura Shogunate. Dedicated to Hachiman, the god of war and archery, the shrine's grand main hall and seasonal cherry and lotus blossoms make it a defining symbol of samurai culture and Kamakura's heritage.",
+        "openingHours": "6:00–20:00 (amulets and goshuin 8:30–16:30)",
+        "access": "10-min walk from Kamakura Station (JR Yokosuka Line / Shonan-Shinjuku Line)."
       }
-    }
+    },
+    "imageUrl": "/images/shrine.jpg"
   }
 ]

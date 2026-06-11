@@ -7,6 +7,5 @@ namespace backend.DTOs.Requests
         public double? Longitude { get; set; }
         public int Page { get; set; } = 1;
         public int PageSize { get; set; } = 12;
-        public string Locale { get; set; } = "en";
     }
 }

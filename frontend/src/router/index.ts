@@ -97,6 +97,11 @@ const router = createRouter({
       name: "shrines",
       component: () => import("@/views/shrine/ShrineView.vue"),
     },
+    {
+      path: `${ROUTE_CONFIGS.SHRINES}/:id`,
+      name: "shrineDetail",
+      component: () => import("@/views/ShrineDetailView.vue"),
+    },
   ],
 });
 

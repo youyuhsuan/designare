@@ -28,6 +28,14 @@ namespace backend.Models
         [MaxLength(300)]
         public string? Address { get; set; }
 
+        public string? Description { get; set; }
+
+        [MaxLength(200)]
+        public string? OpeningHours { get; set; }
+
+        [MaxLength(500)]
+        public string? Access { get; set; }
+
         // JSON-serialized string[]
         public string? EnshrineDeity { get; set; }
 

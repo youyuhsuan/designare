@@ -7,6 +7,7 @@ import type {
   SearchShrinesParams,
   SuggestionShrine,
   Shrine,
+  ShrineDetail,
 } from "@/types/shrinesType";
 
 const useApiShrines = () => {
@@ -24,7 +25,10 @@ const useApiShrines = () => {
   const getShrines = (params: SearchShrinesParams) =>
     instance.post<Shrine[]>(`${API_ENDPOINTS.SHRINES.BASE}`, params);
 
-  return { getShrineSuggestions, getFeaturedShrines, getShrines };
+  const getShrine = (id: string) =>
+    instance.get<ShrineDetail>(`${API_ENDPOINTS.SHRINES.BASE}/${id}`);
+
+  return { getShrineSuggestions, getFeaturedShrines, getShrines, getShrine };
 };
 
 export default useApiShrines;

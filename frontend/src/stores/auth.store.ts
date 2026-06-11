@@ -76,6 +76,7 @@ const useAuthStore = defineStore(
     const login = async (values: LoginRequest) => {
       setAuthState((await loginUser(values)).data);
       await getUser();
+      resetTimer();
     };
 
     // Revoke token on the server, clear local state and redirect to home
@@ -103,6 +104,7 @@ const useAuthStore = defineStore(
 
         await getUser();
         isAuthenticated.value = true;
+        resetTimer();
       } finally {
         loadingStore.stop();
       }
@@ -123,6 +125,7 @@ const useAuthStore = defineStore(
     const processGoogleCallback = async (code: string) => {
       setAuthState((await createGoogleToken(code)).data);
       await getUser();
+      resetTimer();
     };
 
     return {

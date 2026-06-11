@@ -1,3 +1,5 @@
+using Azure.Storage.Blobs;
+using Azure.Storage.Blobs.Models;
 namespace backend.Services
 {
     public class AzureBlobStorageService : IStorageService
@@ -11,8 +13,10 @@ namespace backend.Services
 
         public async Task<string> UploadProfilePictureAsync(string userId, IFormFile file)
         {
-            // TODO: Replace with real Azure Blob Storage implementation
+            string blobName = $"profile-pictures/{userId}/{Guid.NewGuid()}_{file.FileName}";
+
             _logger.LogInformation("UploadProfilePicture: Uploading picture for user {UserId}", userId);
+
 
             // Return a placeholder URL for now
             await Task.CompletedTask;
