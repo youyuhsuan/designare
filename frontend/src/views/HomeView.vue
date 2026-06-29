@@ -5,13 +5,13 @@ import { useI18n } from "vue-i18n";
 import { useRouter } from "vue-router";
 // Components
 import SearchBar from "@/components/common/SearchBar.vue";
+import VerticalDate from "@/components/common/VerticalDate.vue";
+import ShrineCard from "@/components/common/ShrineCard.vue";
 // Composables
 import useAsyncState from "@/composables/useAsyncState";
 import useApiShrines from "@/composables/api/useApiShrines";
 // Types
 import type { Shrine } from "@/types/shrinesType";
-// Utils
-import { formatAddress } from "@/utils/formatUI";
 // Config
 import ROUTE_CONFIGS from "@/config/routeConfig";
 // Images
@@ -31,7 +31,9 @@ onMounted(async () => {
 </script>
 
 <template>
-  <main class="w-full bg-stone-50 relative" aria-label="homepage">
+  <main class="w-full bg-stone-50 dark:bg-stone-100" aria-label="homepage">
+    <!-- Vertical date — fixed right edge -->
+    <VerticalDate />
     <!-- Hero section -->
     <section
       class="w-full h-dvh flex flex-col justify-center gap-3 px-6 md:px-16 lg:px-32 z-10"
@@ -71,21 +73,18 @@ onMounted(async () => {
       class="my-16 md:my-20 px-6 md:px-16 lg:px-32"
       :aria-label="t('home.ariaLabel.featuredtodaySection')"
     >
-      <div class="mb-10 flex flex-col z-10">
-        <div class="flex items-center gap-3 mb-3">
-          <span class="h-px w-6 bg-primary-400" />
-          <span
-            class="text-xs tracking-[0.25em] text-primary-500 uppercase font-medium"
-          >
-            {{ t("home.featuredToday.title") }}
-          </span>
-        </div>
+      <div class="mb-10 flex flex-col gap-2 z-10">
+        <span
+          class="text-[10px] tracking-[0.25em] uppercase font-medium text-stone-600 dark:text-stone-600"
+        >
+          {{ t("home.featuredToday.title") }}
+        </span>
         <h2
-          class="text-2xl md:text-3xl font-light tracking-wider text-stone-700 mb-2"
+          class="text-2xl md:text-3xl font-bold tracking-wider text-primary-500 dark:text-primary-500"
         >
           {{ t("home.featuredToday.heading") }}
         </h2>
-        <p class="text-sm text-stone-400 tracking-wide">
+        <p class="text-sm text-stone-500 dark:text-stone-500 tracking-wide">
           {{ t("home.featuredToday.description") }}
         </p>
       </div>
@@ -117,47 +116,15 @@ onMounted(async () => {
         </div>
 
         <article
-          v-for="shrine in featuredShrines.data.value ?? []"
+          v-for="(shrine, index) in featuredShrines.data.value ?? []"
           :key="shrine.id"
-          class="flex flex-col cursor-pointer group outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-4 rounded-lg"
+          class="cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-primary-400 focus-visible:ring-offset-4"
           tabindex="0"
           @click="router.push(`${ROUTE_CONFIGS.SHRINES}/${shrine.id}`)"
           @keydown.enter="router.push(`${ROUTE_CONFIGS.SHRINES}/${shrine.id}`)"
           v-cursor-hover
         >
-          <!-- Image -->
-          <div class="relative h-64 bg-stone-100 overflow-hidden mb-4">
-            <img
-              v-if="shrine.imageUrl"
-              class="w-full h-full object-cover transition-transform duration-[600ms] ease-out group-hover:scale-105"
-              :src="shrine.imageUrl"
-              :alt="shrine.name"
-              loading="lazy"
-            />
-            <div
-              v-else
-              class="w-full h-full flex items-center justify-center text-stone-300"
-            >
-              <i class="pi pi-image text-4xl" />
-            </div>
-
-            <!-- Hover overlay -->
-            <div
-              class="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            />
-          </div>
-
-          <!-- Info -->
-          <div class="px-1">
-            <h3
-              class="text-base font-medium text-stone-700 tracking-wide transition-colors group-hover:text-primary-500"
-            >
-              {{ shrine.name }}
-            </h3>
-            <p class="text-xs text-stone-400 mt-1.5 tracking-wide">
-              {{ formatAddress(shrine) }}
-            </p>
-          </div>
+          <ShrineCard :shrine="shrine" :index="index" />
         </article>
       </div>
     </section>
