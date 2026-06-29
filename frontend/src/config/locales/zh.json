@@ -24,7 +24,9 @@
       "main": "主導覽列",
       "desktop": "電腦版導覽列",
       "mobile": "行動版導覽列",
-      "toggleMenu": "開關選單"
+      "toggleMenu": "開關選單",
+      "switchToDark": "切換至深色模式",
+      "switchToLight": "切換至淺色模式"
     }
   },
   "home": {

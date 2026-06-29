@@ -8,7 +8,7 @@ export interface FieldIds {
   [key: string]: string;
 }
 
-const generateFieldIds = (keys: string[]): FieldIds => {
+const generateFieldIds = (keys: readonly string[]): FieldIds => {
   return keys.reduce((acc, key) => {
     acc[key] = `${key}-${crypto.randomUUID()}`;
     return acc;

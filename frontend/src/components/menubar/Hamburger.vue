@@ -20,7 +20,7 @@ const middleLineStyle = computed(() => ({
 
 <template>
   <Button
-    class="flex flex-col items-center justify-center rounded gap-1.5 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800"
+    class="flex flex-col items-center justify-center gap-1.5 text-stone-700 dark:text-stone-700 hover:!text-primary-500 hover:!bg-transparent"
     variant="link"
     :aria-label="isMobileMenuOpen ? 'Close menu' : 'Open menu'"
     @click="isMobileMenuOpen = !isMobileMenuOpen"

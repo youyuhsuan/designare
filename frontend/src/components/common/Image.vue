@@ -4,7 +4,7 @@ import { ref } from "vue";
 const hasError = ref<boolean>(false);
 const props = withDefaults(
   defineProps<{
-    imageUrl: string;
+    imageUrl?: string;
     name: string;
     imageClass?: string;
     imageWrapperClass?: string;
@@ -12,6 +12,7 @@ const props = withDefaults(
     loading?: "lazy" | "eager";
   }>(),
   {
+    imageUrl: "",
     imageWrapperClass: "w-full h-full",
     imageClass: "w-full h-full object-cover",
     errorClass: "text-white/60 dark:text-white/60",
@@ -43,7 +44,11 @@ const isLoading = ref<boolean>(!!props.imageUrl);
       @load="isLoading = false"
     />
 
-    <!-- Error -->
-    <i v-if="hasError" class="pi pi-image !text-6xl" :class="errorClass" />
+    <!-- Error / missing image -->
+    <i
+      v-if="hasError || !imageUrl"
+      class="pi pi-image !text-6xl"
+      :class="errorClass"
+    />
   </div>
 </template>

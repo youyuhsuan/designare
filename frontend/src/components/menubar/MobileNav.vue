@@ -5,8 +5,6 @@ import router from "@/router";
 // i18n
 import { useI18n } from "vue-i18n";
 // Primevue
-import Divider from "primevue/divider";
-import "primeicons/primeicons.css";
 import type { MenuItem as PrimeMenuItem } from "primevue/menuitem";
 // Components
 import Avatar from "@/components/Avatar.vue";
@@ -29,7 +27,6 @@ const closeMobilePopover = () => (isMobileMenuOpen.value = false);
 const menuItems = computed<PrimeMenuItem[]>(() => [
   {
     label: t("nav.about"),
-    icon: "pi pi-info-circle",
     command: () => {
       closeMobilePopover();
       router.push(ROUTE_CONFIGS.ABOUT);
@@ -38,7 +35,6 @@ const menuItems = computed<PrimeMenuItem[]>(() => [
   },
   {
     label: t("nav.login"),
-    icon: "pi pi-sign-in",
     command: () => {
       closeMobilePopover();
       router.push(ROUTE_CONFIGS.AUTH);
@@ -47,7 +43,6 @@ const menuItems = computed<PrimeMenuItem[]>(() => [
   },
   {
     label: t("nav.settings"),
-    icon: "pi pi-cog",
     command: () => {
       closeMobilePopover();
       router.push(ROUTE_CONFIGS.SETTING);
@@ -56,7 +51,6 @@ const menuItems = computed<PrimeMenuItem[]>(() => [
   },
   {
     label: t("nav.signOut"),
-    icon: "pi pi-sign-out",
     command: async () => {
       closeMobilePopover();
       await authStore.logout();
@@ -84,31 +78,31 @@ const menuItems = computed<PrimeMenuItem[]>(() => [
       <!-- Popover Content -->
       <transition
         enter-active-class="transition duration-200"
-        enter-from-class="opacity-0 scale-95"
-        enter-to-class="opacity-100 scale-100"
+        enter-from-class="opacity-0"
+        enter-to-class="opacity-100"
         leave-active-class="transition duration-150"
-        leave-from-class="opacity-100 scale-100"
-        leave-to-class="opacity-0 scale-95"
+        leave-from-class="opacity-100"
+        leave-to-class="opacity-0"
       >
         <div
           v-if="isMobileMenuOpen"
-          class="fixed inset-0 bg-white dark:bg-slate-800 z-50 p-4"
+          class="fixed inset-0 bg-stone-50 dark:bg-stone-100 z-50 p-4"
           @click.stop
         >
           <!-- User Info -->
           <template v-if="authStore.isAuthenticated">
             <div
-              class="flex flex-col items-center cursor-pointer hover:opacity-80 transition p-2"
+              class="flex flex-col items-center cursor-pointer hover:text-primary-500 transition-colors p-2"
               @click="router.push(ROUTE_CONFIGS.SETTING)"
             >
               <Avatar size="xlarge" iconClass="text-4xl" />
-              <div class="font-medium text-sm mt-2">
+              <div class="font-medium text-sm tracking-wider mt-2">
                 {{ authStore.user?.name }}
               </div>
             </div>
 
             <!-- Divider -->
-            <Divider class="my-2" />
+            <div class="border-t border-stone-300 dark:border-stone-300 my-2" />
           </template>
 
           <!-- Menu Items -->

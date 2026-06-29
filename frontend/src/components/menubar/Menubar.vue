@@ -9,24 +9,28 @@ const { t } = useI18n();
 </script>
 
 <template>
-  <header
-    :aria-label="t('nav.ariaLabel.main')"
-    class="flex items-center justify-between max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2"
+  <div
+    class="border-b-2 border-stone-500 dark:border-stone-500 bg-stone-50 dark:bg-stone-100 px-6 md:px-16 lg:px-32"
   >
-    <!-- Logo -->
-    <router-link
-      v-cursor-hover
-      to="/"
-      class="font-bold text-xl text-gray-900 dark:text-white hover:opacity-80 transition"
+    <header
+      :aria-label="t('nav.ariaLabel.main')"
+      class="flex items-center justify-between py-2.5"
     >
-      {{ t("common.title") }}
-    </router-link>
+      <!-- Logo -->
+      <router-link
+        v-cursor-hover
+        to="/"
+        class="font-bold tracking-wider text-stone-700 dark:text-stone-700 hover:text-primary-500 transition-colors duration-300"
+      >
+        {{ t("common.title") }}
+      </router-link>
 
-    <!-- Desktop Navigation-->
-    <DesktopNav class="hidden md:flex" />
-    <!-- Moblie Navigation -->
-    <MobileNav class="md:hidden" />
-  </header>
+      <!-- Desktop Navigation-->
+      <DesktopNav class="hidden md:flex" />
+      <!-- Moblie Navigation -->
+      <MobileNav class="md:hidden" />
+    </header>
+  </div>
 </template>
 
 <style scoped>

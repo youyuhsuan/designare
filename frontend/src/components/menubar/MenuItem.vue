@@ -14,26 +14,24 @@ defineProps<{ item: MenuItem }>();
     <a
       :href="href"
       :class="[
-        'w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300  hover:opacity-80 dark:hover:text-slate-800 transition-colors',
-        isActive && 'text-primary',
+        'w-full flex items-center px-4 py-2 text-sm tracking-[0.2em] hover:text-primary-500 transition-colors',
+        isActive
+          ? 'text-primary-500 dark:text-primary-500'
+          : 'text-stone-700 dark:text-stone-700',
       ]"
       :aria-label="String(item.label)"
       @click="navigate"
     >
-      <i v-if="item.icon" :class="item.icon" />
       <span>{{ item.label }}</span>
     </a>
   </router-link>
 
   <button
     v-else-if="item.command"
-    :class="[
-      'w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-300  hover:opacity-80 dark:hover:text-slate-800 transition-colors',
-    ]"
+    class="w-full flex items-center px-4 py-2 text-sm tracking-[0.2em] text-stone-700 dark:text-stone-700 hover:text-primary-500 transition-colors"
     :aria-label="String(item.label)"
     @click="(e) => item?.command?.({ originalEvent: e, item })"
   >
-    <i v-if="item.icon" :class="item.icon" />
     <span>{{ item.label }}</span>
   </button>
 </template>

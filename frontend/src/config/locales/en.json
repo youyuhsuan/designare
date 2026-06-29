@@ -24,7 +24,9 @@
       "main": "Main navigation",
       "desktop": "Desktop navigation",
       "mobile": "Mobile navigation",
-      "toggleMenu": "Toggle menu"
+      "toggleMenu": "Toggle menu",
+      "switchToDark": "Switch to dark mode",
+      "switchToLight": "Switch to light mode"
     }
   },
   "home": {

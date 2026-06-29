@@ -36,7 +36,11 @@ const router = useRouter();
 
 const { isLoading, execute } = useAsyncAction(
   (values: LoginRequest) => login(values),
-  { onError: (error) => { serverError.value = error as string; } },
+  {
+    onError: (error) => {
+      serverError.value = error as string;
+    },
+  },
 );
 
 const resolver = zodResolver(
@@ -140,7 +144,7 @@ const onFormSubmit = async (e: FormSubmitEvent) => {
           size="small"
           binary
         />
-        <label :for="fieldIds.checked" class="text-gray-600">
+        <label :for="fieldIds.checked" class="text-stone-600">
           {{ $t("auth.login.rememberMe") }}
         </label>
       </div>

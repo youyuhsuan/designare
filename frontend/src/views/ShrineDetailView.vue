@@ -23,7 +23,7 @@ const settingStore = useSettingStore();
 const { getShrine } = useApiShrines();
 
 const shrineState = useAsyncState(() =>
-  getShrine(route.params.id).then((r) => r.data),
+  getShrine(route.params.id as string).then((r) => r.data),
 );
 
 const localeTrackingClass = {
@@ -75,6 +75,7 @@ onMounted(async () => {
 
         <!-- Category -->
         <div
+          v-if="shrineState.data.value.benefits?.length"
           class="grid border-l border-stone-500 dark:border-stone-500"
           :style="{
             gridTemplateColumns: `repeat(${shrineState.data.value.benefits.length}, 1fr)`,

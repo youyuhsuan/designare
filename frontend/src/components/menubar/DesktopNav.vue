@@ -6,8 +6,6 @@ import router from "@/router";
 import { useI18n } from "vue-i18n";
 // Primevue
 import Popover from "primevue/popover";
-import Divider from "primevue/divider";
-import "primeicons/primeicons.css";
 import type { MenuItem as PrimeMenuItem } from "primevue/menuitem";
 // Components
 import Avatar from "@/components/Avatar.vue";
@@ -28,14 +26,12 @@ const vAuthPopover = ref<InstanceType<typeof Popover> | null>(null);
 const baseMenuItems = computed<PrimeMenuItem[]>(() => [
   {
     label: t("nav.search"),
-    icon: "pi pi-cog",
-    route: ROUTE_CONFIGS.SEARCH,
-    command: () => router.push(ROUTE_CONFIGS.SEARCH),
+    route: ROUTE_CONFIGS.SHRINES,
+    command: () => router.push(ROUTE_CONFIGS.SHRINES),
     visible: true,
   },
   {
     label: t("nav.about"),
-    icon: "pi pi-home",
     route: ROUTE_CONFIGS.ABOUT,
     command: () => router.push(ROUTE_CONFIGS.ABOUT),
     visible: true,
@@ -44,14 +40,12 @@ const baseMenuItems = computed<PrimeMenuItem[]>(() => [
 const userMenuItems = computed<PrimeMenuItem[]>(() => [
   {
     label: t("nav.settings"),
-    icon: "pi pi-cog",
     route: ROUTE_CONFIGS.SETTING,
     command: () => router.push(ROUTE_CONFIGS.SETTING),
     visible: authStore.isAuthenticated,
   },
   {
     label: t("nav.signOut"),
-    icon: "pi pi-sign-out",
     command: async () => {
       vAuthPopover.value?.hide();
       await authStore.logout();
@@ -96,9 +90,9 @@ const cancelHidePopover = () => {
       v-for="(item, index) in baseMenuItems"
       :key="index"
       :to="item.route"
-      class="px-4 text-sm text-gray-700 dark:text-gray-300 transition hover:opacity-80 dark:hover:text-slate-800"
+      class="px-4 text-[10px] tracking-[0.2em] uppercase text-stone-600 dark:text-stone-600 hover:text-primary-500 transition-colors"
+      exact-active-class="!text-primary-500"
       :aria-label="item.label"
-      v-ripple
       v-cursor-hover
     >
       {{ item.label }}
@@ -112,8 +106,7 @@ const cancelHidePopover = () => {
       <router-link
         :to="ROUTE_CONFIGS.AUTH"
         :aria-label="t('nav.ariaLabel.login')"
-        class="flex items-center gap-2 px-4 text-sm text-gray-700 dark:text-gray-300 transition hover:opacity-80 dark:hover:text-slate-800"
-        v-ripple
+        class="flex items-center gap-2 px-4 text-[10px] tracking-[0.2em] uppercase text-stone-600 dark:text-stone-600 hover:text-primary-500 transition-colors"
         v-cursor-hover
       >
         <span>{{ t("nav.login") }}</span>
@@ -142,17 +135,17 @@ const cancelHidePopover = () => {
         <div class="flex flex-col w-[12.5rem] py-1 px-0.5">
           <!-- User Info -->
           <div
-            class="flex flex-col items-center cursor-pointer hover:opacity-80 transition p-2"
+            class="flex flex-col items-center cursor-pointer hover:text-primary-500 transition-colors p-2"
             @click="router.push(ROUTE_CONFIGS.SETTING)"
           >
             <Avatar size="xlarge" iconClass="text-4xl" />
-            <div class="font-medium text-sm mt-2">
+            <div class="font-medium text-sm tracking-wider mt-2">
               {{ authStore.user?.name }}
             </div>
           </div>
 
           <!-- Divider -->
-          <Divider class="my-2" />
+          <div class="border-t border-stone-300 dark:border-stone-300 my-2" />
 
           <!-- Action Menu -->
           <ul class="list-none p-0 m-0 flex flex-col">

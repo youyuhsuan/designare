@@ -2,9 +2,9 @@ import { computed, ref } from "vue";
 // Pinia
 import { defineStore } from "pinia";
 // i18n
-import { useI18n, type Locale } from "vue-i18n";
+import { useI18n } from "vue-i18n";
 // Type
-import type { theme } from "@/types/settingType";
+import type { theme, Language } from "@/types/settingType";
 // Stores
 import useAuthStore from "@/stores/auth.store";
 
@@ -59,7 +59,7 @@ const useSettingStore = defineStore(
 
     // i18n
     const { locale } = useI18n();
-    const currentLanguage = ref<Locale>(locale.value);
+    const currentLanguage = ref<Language>(locale.value as Language);
 
     const changeLanguage = () => {
       locale.value = currentLanguage.value;

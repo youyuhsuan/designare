@@ -236,10 +236,12 @@ onMounted(async () => {
   <!-- Section header with edit toggle -->
   <div class="flex justify-between mb-6">
     <div>
-      <h2 class="text-base font-semibold mb-0.5">
+      <h2
+        class="text-[10px] tracking-[0.25em] uppercase font-medium text-stone-600 dark:text-stone-600 mb-1"
+      >
         {{ $t("settings.profile.title") }}
       </h2>
-      <p class="text-sm text-muted-color">
+      <p class="text-sm text-stone-500 dark:text-stone-500">
         {{ $t("settings.profile.description") }}
       </p>
     </div>
@@ -389,8 +391,10 @@ onMounted(async () => {
 
     <div class="flex flex-col gap-4 mb-12">
       <!-- Bio -->
-      <div class="flex flex-col" v-if="userInfo.bio">
-        <span class="text-xs font-medium tracking-widest">
+      <div class="flex flex-col gap-1" v-if="userInfo.bio">
+        <span
+          class="text-[10px] tracking-[0.2em] uppercase text-stone-400 dark:text-stone-400"
+        >
           {{ $t("settings.profile.field.bio") }}
         </span>
         <span class="whitespace-pre-line">
@@ -399,16 +403,20 @@ onMounted(async () => {
       </div>
 
       <!-- Location -->
-      <div class="flex flex-col" v-if="userInfo.location">
-        <span class="text-xs font-medium tracking-widest">
+      <div class="flex flex-col gap-1" v-if="userInfo.location">
+        <span
+          class="text-[10px] tracking-[0.2em] uppercase text-stone-400 dark:text-stone-400"
+        >
           {{ $t("settings.profile.field.location") }}
         </span>
         <span class="whitespace-pre-line">
           {{ userInfo.location }}
         </span>
       </div>
-      <div class="flex flex-col" v-if="userInfo.birthDate">
-        <span class="text-xs font-medium tracking-widest">
+      <div class="flex flex-col gap-1" v-if="userInfo.birthDate">
+        <span
+          class="text-[10px] tracking-[0.2em] uppercase text-stone-400 dark:text-stone-400"
+        >
           {{ $t("settings.profile.field.birthDate") }}
         </span>
         <span class="whitespace-pre-line">
@@ -422,14 +430,16 @@ onMounted(async () => {
     </div>
 
     <!-- Delete account -->
-    <div class="flex justify-between items-center">
+    <div
+      class="flex justify-between items-center border-t border-stone-300 dark:border-stone-300 pt-6"
+    >
       <div>
         <h2
-          class="text-base font-semibold text-red-500 dark:text-red-400 mb-0.5"
+          class="text-[10px] tracking-[0.25em] uppercase font-medium text-primary-500 dark:text-primary-400 mb-1"
         >
           {{ $t("settings.profile.deleteAccount.title") }}
         </h2>
-        <span class="text-sm text-muted-color">
+        <span class="text-sm text-stone-500 dark:text-stone-500">
           {{ $t("settings.profile.deleteAccount.description") }}
         </span>
       </div>

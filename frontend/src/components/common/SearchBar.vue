@@ -73,13 +73,16 @@ const navigateToSearch = () => {
     longitude: location.value?.longitude,
     page: 1,
   });
-  router.push({ path: ROUTE_CONFIGS.SEARCH, query: query as LocationQueryRaw });
+  router.push({
+    path: ROUTE_CONFIGS.SHRINES,
+    query: query as LocationQueryRaw,
+  });
 };
 </script>
 
 <template>
   <InputGroup
-    class="!w-full !max-w-[560px] !border !border-stone-200/80 !bg-white/85 !backdrop-blur-sm !shadow-[0_4px_24px_-8px_rgba(0,0,0,0.06)] !overflow-hidden transition-all duration-300 hover:!shadow-[0_8px_32px_-8px_rgba(255,88,65,0.12)] focus-within:!border-primary-300"
+    class="!w-full !max-w-[560px] !rounded-none !border-2 !border-stone-500 dark:!border-stone-500 !bg-stone-50 dark:!bg-stone-50 !overflow-hidden transition-colors duration-300 hover:!border-primary-500 focus-within:!border-primary-500"
   >
     <!-- Location input -->
     <div class="relative flex items-center flex-1 min-w-0">
@@ -101,7 +104,7 @@ const navigateToSearch = () => {
 
     <!-- Divider -->
     <div class="py-2.5">
-      <div class="h-full border-r border-stone-200" />
+      <div class="h-full border-r border-stone-300 dark:border-stone-300" />
     </div>
 
     <!-- Shrine autocomplete -->
