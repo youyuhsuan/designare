@@ -24,6 +24,17 @@ const pinia = createPinia();
 
 // Customize existing preset
 const MyPreset = definePreset(Aura, {
+  // Editorial language: zero rounding everywhere (omikuji print style)
+  primitive: {
+    borderRadius: {
+      none: "0",
+      xs: "0",
+      sm: "0",
+      md: "0",
+      lg: "0",
+      xl: "0",
+    },
+  },
   semantic: {
     colorScheme: {
       light: {
@@ -52,6 +63,21 @@ const MyPreset = definePreset(Aura, {
           800: "#302A24",
           900: "#1A1612",
         },
+        // Aura defaults surface to slate (cool gray) — remap to warm stone
+        surface: {
+          0: "#FFFFFF",
+          50: "#FAF8F6",
+          100: "#F3EFEB",
+          200: "#E8E2DB",
+          300: "#D4CBC1",
+          400: "#B0A596",
+          500: "#8A7E6F",
+          600: "#6B6053",
+          700: "#4A4239",
+          800: "#302A24",
+          900: "#1A1612",
+          950: "#0F0D0B",
+        },
       },
       dark: {
         primary: {
@@ -79,6 +105,30 @@ const MyPreset = definePreset(Aura, {
           "800": "#E0DAD4",
           "900": "#F5F2EF",
         },
+        // Dark-mode surface keeps the standard 50→950 light-to-dark direction
+        // (Aura reads surface.900 as content background in dark mode)
+        surface: {
+          0: "#FFFFFF",
+          50: "#FAF8F6",
+          100: "#F3EFEB",
+          200: "#E8E2DB",
+          300: "#D4CBC1",
+          400: "#B0A596",
+          500: "#8A7E6F",
+          600: "#6B6053",
+          700: "#4A4239",
+          800: "#302A24",
+          900: "#1A1612",
+          950: "#0F0D0B",
+        },
+      },
+    },
+  },
+  components: {
+    // Flat content surfaces; overlays (Dialog/Toast) keep their shadow for depth separation
+    card: {
+      root: {
+        shadow: "none",
       },
     },
   },
