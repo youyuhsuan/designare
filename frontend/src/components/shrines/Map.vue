@@ -3,16 +3,16 @@ import { ref, onMounted, onUnmounted, nextTick } from "vue";
 // Stores
 import useSettingStore from "@/stores/setting.store";
 
-const props = defineProps<{ longitude: number; latitude: number }>();
+const props = defineProps<{ longitude?: number; latitude?: number }>();
 const settingStore = useSettingStore();
 
 const vMapEl = ref<HTMLElement | null>(null);
 
-let map: L.Map | null = null;
-let L: Awaited<typeof import("leaflet")> | null = null;
+let map: import("leaflet").Map | null = null;
+let L: typeof import("leaflet") | null = null;
 
 const initMapBase = () => {
-  if (!vMapEl.value) return;
+  if (!vMapEl.value || !L) return;
 
   map = L.map(vMapEl.value, { scrollWheelZoom: false });
   L.tileLayer(
@@ -25,7 +25,7 @@ const initMapBase = () => {
 };
 
 const addShrineMarker = () => {
-  if (!map || !props.longitude || !props.latitude) return;
+  if (!map || !L || !props.longitude || !props.latitude) return;
 
   map.setView([props.latitude, props.longitude], 15);
 
