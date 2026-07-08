@@ -1,6 +1,7 @@
 import { fileURLToPath, URL } from "node:url";
 
 import { defineConfig } from "vite";
+import type { UserConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import vueDevTools from "vite-plugin-vue-devtools";
@@ -11,14 +12,16 @@ import { PrimeVueResolver } from "@primevue/auto-import-resolver";
 
 import tailwindcss from "@tailwindcss/vite";
 import svgLoader from "vite-svg-loader";
+import checker from "vite-plugin-checker";
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
     vueJsx(),
-    // vueDevTools(),
+    vueDevTools(),
     tailwindcss(),
+    checker({ vueTsc: true }),
     Components({
       resolvers: [PrimeVueResolver()],
     }),
@@ -33,4 +36,4 @@ export default defineConfig({
       "@": fileURLToPath(new URL("./frontend/src", import.meta.url)),
     },
   },
-});
+}) satisfies UserConfig;
